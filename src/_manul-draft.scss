@@ -1,0 +1,27 @@
+
+.megadraft-editor {
+  @import '../node_modules/megadraft/lib/styles/sidebar';
+  @import '../node_modules/megadraft/lib/styles/toolbar';
+  @import '../node_modules/megadraft/lib/styles/block';
+  @import '../node_modules/megadraft/lib/styles/dropdown';
+  @import '../node_modules/megadraft/lib/styles/media';
+
+  position: relative;
+  .sidebar {
+    z-index: 100;
+  }
+  .sidemenu {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .sidemenu__items--open {
+    overflow: visible;
+    width: auto;
+  }
+  .toolbar__list {
+    display: flex;
+    align-items: center;
+  }
+}
+@import '../node_modules/megadraft/lib/styles/media';

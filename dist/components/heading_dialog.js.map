@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/components/heading_dialog.js"],"names":[],"mappings":";;;;;;AACA;;;;AACA;;;;;;kBAEe,yCAAc,eAAd,oB","file":"heading_dialog.js","sourcesContent":["\nimport Heading from './heading';\nimport fromContextOr from '../component_from_context_or';\n\nexport default fromContextOr('HeadingDialog', Heading);\n"]}

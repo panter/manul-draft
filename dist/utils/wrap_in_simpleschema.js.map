@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/utils/wrap_in_simpleschema.js"],"names":["schema"],"mappings":";;;;;;AAAA;;;;;;kBAEe;AAAA,SACbA,0CAAiCA,MAAjC,GAA0C,0BAAiBA,MAAjB,CAD7B;AAAA,C","file":"wrap_in_simpleschema.js","sourcesContent":["import SimpleSchema from 'simpl-schema';\n\nexport default schema => (\n  schema instanceof SimpleSchema ? schema : new SimpleSchema(schema)\n);\n"]}

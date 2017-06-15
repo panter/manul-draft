@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/components/button_add_plugin.js"],"names":[],"mappings":";;;;;;AAAA;;;;AACA;;;;;;kBAEe,yCAAc,iBAAd,mB","file":"button_add_plugin.js","sourcesContent":["import fromContextOr from '../component_from_context_or';\nimport Button from './button';\n\nexport default fromContextOr('ButtonAddPlugin', Button);\n"]}
