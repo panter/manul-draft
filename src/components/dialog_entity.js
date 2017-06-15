@@ -6,13 +6,13 @@ import FormEntity from './form_entity';
 import Heading from './heading';
 import Button from './button';
 
-const EntityForm = ({ entityType, setEntity, cancelEntity, removeEntity, schema, ...props }) => {
+const DialogEntity = ({ entityType, setEntity, cancelEntity, removeEntity, schema, ...props }) => {
   const dataMap = new Immutable.Map(props);
   return (
     <div
       style={{
         padding: 5,
-        minWidth: 240,
+        minWidth: 300,
       }}
     >
       <div
@@ -22,9 +22,10 @@ const EntityForm = ({ entityType, setEntity, cancelEntity, removeEntity, schema,
         }}
       >
         <Heading style={{ marginTop: 0 }} level={3}>
-          <T>{`cm.entities.${entityType}`}</T>
+          <T>{`cm.entities.${entityType}.label`}</T>
         </Heading>
         <FormEntity
+          i18nNamespace={`cm.entities.${entityType}`}
           additionalActions={
             <Button small onClick={removeEntity}>Remove</Button>
           }
@@ -43,4 +44,4 @@ const EntityForm = ({ entityType, setEntity, cancelEntity, removeEntity, schema,
 };
 
 
-export default EntityForm;
+export default DialogEntity;

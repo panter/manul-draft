@@ -32,7 +32,7 @@ var _button2 = _interopRequireDefault(_button);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var EntityForm = function EntityForm(_ref) {
+var DialogEntity = function DialogEntity(_ref) {
   var entityType = _ref.entityType,
       setEntity = _ref.setEntity,
       cancelEntity = _ref.cancelEntity,
@@ -46,7 +46,7 @@ var EntityForm = function EntityForm(_ref) {
     {
       style: {
         padding: 5,
-        minWidth: 240
+        minWidth: 300
       }
     },
     _react2.default.createElement(
@@ -67,6 +67,7 @@ var EntityForm = function EntityForm(_ref) {
         )
       ),
       _react2.default.createElement(_form_entity2.default, {
+        i18nNamespace: 'cm.entities.' + entityType,
         additionalActions: _react2.default.createElement(
           _button2.default,
           { small: true, onClick: removeEntity },
@@ -75,7 +76,6 @@ var EntityForm = function EntityForm(_ref) {
         dataMap: dataMap.toJS(),
         schema: schema,
         autosave: false,
-        i18nNamespace: 'cm.entities.' + entityType,
         onSubmit: function onSubmit(data) {
           cancelEntity();
           setEntity(schema.clean(data));
@@ -85,5 +85,5 @@ var EntityForm = function EntityForm(_ref) {
   );
 };
 
-exports.default = EntityForm;
-//# sourceMappingURL=entity_form.js.map
+exports.default = DialogEntity;
+//# sourceMappingURL=dialog_entity.js.map

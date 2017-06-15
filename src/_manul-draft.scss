@@ -1,10 +1,10 @@
 
 .megadraft-editor {
-  @import '../node_modules/megadraft/lib/styles/sidebar';
-  @import '../node_modules/megadraft/lib/styles/toolbar';
-  @import '../node_modules/megadraft/lib/styles/block';
-  @import '../node_modules/megadraft/lib/styles/dropdown';
-  @import '../node_modules/megadraft/lib/styles/media';
+  @import '{}/node_modules/megadraft/lib/styles/sidebar';
+  @import '{}/node_modules/megadraft/lib/styles/toolbar';
+  @import '{}/node_modules/megadraft/lib/styles/block';
+  @import '{}/node_modules/megadraft/lib/styles/dropdown';
+  @import '{}/node_modules/megadraft/lib/styles/media';
 
   position: relative;
   .sidebar {
@@ -24,4 +24,4 @@
     align-items: center;
   }
 }
-@import '../node_modules/megadraft/lib/styles/media';
+@import '{}/node_modules/megadraft/lib/styles/media';

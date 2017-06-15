@@ -12,9 +12,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _entity_form = require('./components/entity_form');
+var _dialog_entity = require('./components/dialog_entity');
 
-var _entity_form2 = _interopRequireDefault(_entity_form);
+var _dialog_entity2 = _interopRequireDefault(_dialog_entity);
 
 var _wrap_in_simpleschema = require('./utils/wrap_in_simpleschema');
 
@@ -26,7 +26,7 @@ exports.default = function (_ref) {
   var schema = _ref.schema;
 
   var FormEntityInput = function FormEntityInput(props) {
-    return _react2.default.createElement(_entity_form2.default, (0, _extends3.default)({}, props, { schema: (0, _wrap_in_simpleschema2.default)(schema) }));
+    return _react2.default.createElement(_dialog_entity2.default, (0, _extends3.default)({}, props, { schema: (0, _wrap_in_simpleschema2.default)(schema) }));
   };
   FormEntityInput.displayName = 'FormEntityInput';
   return FormEntityInput;
