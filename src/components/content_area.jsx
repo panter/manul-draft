@@ -58,29 +58,31 @@ const ContentArea = ({
         style={styles.base}
         onClick={() => canEdit && highlightEditable && startEditing()}
       >
-        {isEditing && (
-        <AreaActionsToolbar
-          saveAndClose={saveAndClose}
-          saveAndEdit={saveAndEdit}
-          cancelEditing={cancelEditing}
-          locale={locale}
-          copyLocales={copyLocales}
-          copyFromLocale={copyFromLocale}
-        />
+        <div style={highlightEditable ? { pointerEvents: 'none' } : null}>
+          {isEditing && (
+          <AreaActionsToolbar
+            saveAndClose={saveAndClose}
+            saveAndEdit={saveAndEdit}
+            cancelEditing={cancelEditing}
+            locale={locale}
+            copyLocales={copyLocales}
+            copyFromLocale={copyFromLocale}
+          />
       )}
-        <MegadraftEditor
-          key={`contentId${isEditing ? '_editing' : ''}`} // force rerender
-          actions={megadraftActions}
-          plugins={megadraftBlockPlugins}
-          readOnly={blockPluginDialogIsActive || !canEdit || !isEditing}
-          editorState={editorState}
-          entityInputs={entityInputs}
-          blockRenderMap={blockRenderMap}
-          onChange={(state) => {
-            setEditorState(state);
-          }}
-        />
-        <div style={{ clear: 'both' }} />
+          <MegadraftEditor
+            key={`contentId${isEditing ? '_editing' : ''}`} // force rerender
+            actions={megadraftActions}
+            plugins={megadraftBlockPlugins}
+            readOnly={blockPluginDialogIsActive || !canEdit || !isEditing}
+            editorState={editorState}
+            entityInputs={entityInputs}
+            blockRenderMap={blockRenderMap}
+            onChange={(state) => {
+              setEditorState(state);
+            }}
+          />
+          <div style={{ clear: 'both' }} />
+        </div>
       </div>
     </div>
   );

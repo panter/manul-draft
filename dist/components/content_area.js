@@ -115,27 +115,31 @@ var ContentArea = function ContentArea(_ref2) {
           return canEdit && highlightEditable && startEditing();
         }
       },
-      isEditing && _react2.default.createElement(_area_actions_toolbar2.default, {
-        saveAndClose: saveAndClose,
-        saveAndEdit: saveAndEdit,
-        cancelEditing: cancelEditing,
-        locale: locale,
-        copyLocales: copyLocales,
-        copyFromLocale: copyFromLocale
-      }),
-      _react2.default.createElement(MegadraftEditor, {
-        key: 'contentId' + (isEditing ? '_editing' : '') // force rerender
-        , actions: megadraftActions,
-        plugins: megadraftBlockPlugins,
-        readOnly: blockPluginDialogIsActive || !canEdit || !isEditing,
-        editorState: editorState,
-        entityInputs: entityInputs,
-        blockRenderMap: blockRenderMap,
-        onChange: function onChange(state) {
-          setEditorState(state);
-        }
-      }),
-      _react2.default.createElement('div', { style: { clear: 'both' } })
+      _react2.default.createElement(
+        'div',
+        { style: highlightEditable ? { pointerEvents: 'none' } : null },
+        isEditing && _react2.default.createElement(_area_actions_toolbar2.default, {
+          saveAndClose: saveAndClose,
+          saveAndEdit: saveAndEdit,
+          cancelEditing: cancelEditing,
+          locale: locale,
+          copyLocales: copyLocales,
+          copyFromLocale: copyFromLocale
+        }),
+        _react2.default.createElement(MegadraftEditor, {
+          key: 'contentId' + (isEditing ? '_editing' : '') // force rerender
+          , actions: megadraftActions,
+          plugins: megadraftBlockPlugins,
+          readOnly: blockPluginDialogIsActive || !canEdit || !isEditing,
+          editorState: editorState,
+          entityInputs: entityInputs,
+          blockRenderMap: blockRenderMap,
+          onChange: function onChange(state) {
+            setEditorState(state);
+          }
+        }),
+        _react2.default.createElement('div', { style: { clear: 'both' } })
+      )
     )
   );
 };
