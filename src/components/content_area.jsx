@@ -1,6 +1,8 @@
-import React from 'react';
 import { MegadraftEditor as MegadraftEditorOrg } from 'megadraft';
+import React from 'react';
+
 import AreaActionsToolbar from './area_actions_toolbar';
+import DraggableWindow from './draggable_window';
 
 // quickfix for https://github.com/globocom/megadraft/issues/97
 class MegadraftEditor extends MegadraftEditorOrg {
@@ -52,6 +54,20 @@ const ContentArea = ({
   }) => {
   const styles = Styles({ highlightEditable, isEditing });
 
+  const renderEditor = readOnly => (
+    <MegadraftEditor
+      key={`contentId${isEditing ? '_editing' : ''}`} // force rerender
+      actions={megadraftActions}
+      plugins={megadraftBlockPlugins}
+      readOnly={readOnly}
+      editorState={editorState}
+      entityInputs={entityInputs}
+      blockRenderMap={blockRenderMap}
+      onChange={setEditorState}
+    />
+  );
+
+
   return (
     <div style={style} className={className}>
       <div
@@ -60,27 +76,29 @@ const ContentArea = ({
       >
         <div style={highlightEditable ? { pointerEvents: 'none' } : null}>
           {isEditing && (
-          <AreaActionsToolbar
-            saveAndClose={saveAndClose}
-            saveAndEdit={saveAndEdit}
-            cancelEditing={cancelEditing}
-            locale={locale}
-            copyLocales={copyLocales}
-            copyFromLocale={copyFromLocale}
-          />
+            <DraggableWindow>
+              <div
+                className="megadraft-floating-window" style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 'calc(100% - 50px)',
+                }}
+              >
+
+                {renderEditor(blockPluginDialogIsActive || !canEdit || !isEditing)}
+                <AreaActionsToolbar
+                  saveAndClose={saveAndClose}
+                  saveAndEdit={saveAndEdit}
+                  cancelEditing={cancelEditing}
+                  onResize={e => e.stopPropagation()}
+                  locale={locale}
+                  copyLocales={copyLocales}
+                  copyFromLocale={copyFromLocale}
+                />
+              </div>
+            </DraggableWindow>
       )}
-          <MegadraftEditor
-            key={`contentId${isEditing ? '_editing' : ''}`} // force rerender
-            actions={megadraftActions}
-            plugins={megadraftBlockPlugins}
-            readOnly={blockPluginDialogIsActive || !canEdit || !isEditing}
-            editorState={editorState}
-            entityInputs={entityInputs}
-            blockRenderMap={blockRenderMap}
-            onChange={(state) => {
-              setEditorState(state);
-            }}
-          />
+          {renderEditor(true)}
           <div style={{ clear: 'both' }} />
         </div>
       </div>

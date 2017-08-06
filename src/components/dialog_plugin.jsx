@@ -1,11 +1,12 @@
-import React from 'react';
 import { T } from '@panter/manul-i18n';
-import { shouldUpdate } from 'recompose';
 import { isEqual } from 'lodash/fp';
-import HeadingDialog from './heading_dialog';
+import { shouldUpdate } from 'recompose';
+import React from 'react';
+
 import Button from './button';
 import ButtonGroup from './button_group';
 import FormPlugin from './form_plugin';
+import HeadingDialog from './heading_dialog';
 import fromContextOr from '../component_from_context_or';
 
 

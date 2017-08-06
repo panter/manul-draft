@@ -37,15 +37,11 @@ var AreaActionsToolbar = (0, _component_from_context_or2.default)('AreaActionsTo
     'div',
     {
       style: {
-        position: 'fixed',
         display: 'flex',
         flexDirection: 'row',
-        zIndex: 100,
-        bottom: 0,
-        left: 0,
         width: '100%',
         padding: 5,
-        backgroundColor: 'white',
+        minHeight: 50,
         borderTop: '1px solid black'
       }
     },

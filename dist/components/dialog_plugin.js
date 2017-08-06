@@ -4,23 +4,19 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _isEqual2 = require('lodash/fp/isEqual');
-
-var _isEqual3 = _interopRequireDefault(_isEqual2);
-
 var _shouldUpdate2 = require('recompose/shouldUpdate');
 
 var _shouldUpdate3 = _interopRequireDefault(_shouldUpdate2);
 
-var _react = require('react');
+var _isEqual2 = require('lodash/fp/isEqual');
 
-var _react2 = _interopRequireDefault(_react);
+var _isEqual3 = _interopRequireDefault(_isEqual2);
 
 var _manulI18n = require('@panter/manul-i18n');
 
-var _heading_dialog = require('./heading_dialog');
+var _react = require('react');
 
-var _heading_dialog2 = _interopRequireDefault(_heading_dialog);
+var _react2 = _interopRequireDefault(_react);
 
 var _button = require('./button');
 
@@ -33,6 +29,10 @@ var _button_group2 = _interopRequireDefault(_button_group);
 var _form_plugin = require('./form_plugin');
 
 var _form_plugin2 = _interopRequireDefault(_form_plugin);
+
+var _heading_dialog = require('./heading_dialog');
+
+var _heading_dialog2 = _interopRequireDefault(_heading_dialog);
 
 var _component_from_context_or = require('../component_from_context_or');
 

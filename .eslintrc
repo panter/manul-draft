@@ -24,6 +24,8 @@
     "no-underscore-dangle": 0,
     "react/prop-types": 0,
     "react/jsx-filename-extension": 0,
+    "import/extensions": 0,
+    "import/no-unresolved": ["error", { ignore: ['^react$', 'mantra-core', '@panter/manul-i18n'] }],
     "jsx-a11y/no-static-element-interactions": 0
   }
 }

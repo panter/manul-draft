@@ -28,15 +28,19 @@ var _inherits2 = require('babel-runtime/helpers/inherits');
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
+var _megadraft = require('megadraft');
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _megadraft = require('megadraft');
-
 var _area_actions_toolbar = require('./area_actions_toolbar');
 
 var _area_actions_toolbar2 = _interopRequireDefault(_area_actions_toolbar);
+
+var _draggable_window = require('./draggable_window');
+
+var _draggable_window2 = _interopRequireDefault(_draggable_window);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -104,6 +108,19 @@ var ContentArea = function ContentArea(_ref2) {
 
   var styles = Styles({ highlightEditable: highlightEditable, isEditing: isEditing });
 
+  var renderEditor = function renderEditor(readOnly) {
+    return _react2.default.createElement(MegadraftEditor, {
+      key: 'contentId' + (isEditing ? '_editing' : '') // force rerender
+      , actions: megadraftActions,
+      plugins: megadraftBlockPlugins,
+      readOnly: readOnly,
+      editorState: editorState,
+      entityInputs: entityInputs,
+      blockRenderMap: blockRenderMap,
+      onChange: setEditorState
+    });
+  };
+
   return _react2.default.createElement(
     'div',
     { style: style, className: className },
@@ -118,26 +135,33 @@ var ContentArea = function ContentArea(_ref2) {
       _react2.default.createElement(
         'div',
         { style: highlightEditable ? { pointerEvents: 'none' } : null },
-        isEditing && _react2.default.createElement(_area_actions_toolbar2.default, {
-          saveAndClose: saveAndClose,
-          saveAndEdit: saveAndEdit,
-          cancelEditing: cancelEditing,
-          locale: locale,
-          copyLocales: copyLocales,
-          copyFromLocale: copyFromLocale
-        }),
-        _react2.default.createElement(MegadraftEditor, {
-          key: 'contentId' + (isEditing ? '_editing' : '') // force rerender
-          , actions: megadraftActions,
-          plugins: megadraftBlockPlugins,
-          readOnly: blockPluginDialogIsActive || !canEdit || !isEditing,
-          editorState: editorState,
-          entityInputs: entityInputs,
-          blockRenderMap: blockRenderMap,
-          onChange: function onChange(state) {
-            setEditorState(state);
-          }
-        }),
+        isEditing && _react2.default.createElement(
+          _draggable_window2.default,
+          null,
+          _react2.default.createElement(
+            'div',
+            {
+              className: 'megadraft-floating-window', style: {
+                display: 'flex',
+                flexDirection: 'column',
+                height: 'calc(100% - 50px)'
+              }
+            },
+            renderEditor(blockPluginDialogIsActive || !canEdit || !isEditing),
+            _react2.default.createElement(_area_actions_toolbar2.default, {
+              saveAndClose: saveAndClose,
+              saveAndEdit: saveAndEdit,
+              cancelEditing: cancelEditing,
+              onResize: function onResize(e) {
+                return e.stopPropagation();
+              },
+              locale: locale,
+              copyLocales: copyLocales,
+              copyFromLocale: copyFromLocale
+            })
+          )
+        ),
+        renderEditor(true),
         _react2.default.createElement('div', { style: { clear: 'both' } })
       )
     )

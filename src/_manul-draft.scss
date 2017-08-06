@@ -9,6 +9,7 @@
   position: relative;
   .sidebar {
     z-index: 100;
+
   }
   .sidemenu {
     width: auto;
@@ -24,4 +25,18 @@
     align-items: center;
   }
 }
+
+.megadraft-floating-window {
+  .megadraft {
+    height: 100%;
+    .megadraft-editor {
+      height: 100%;
+      .DraftEditor-root {
+        height: 100%;
+        overflow: auto;
+      }
+    }
+  }
+}
+
 @import '{}/node_modules/megadraft/lib/styles/media';

@@ -1,7 +1,7 @@
 {
   "name": "@panter/manul-draft",
   "description": "",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "author": {
     "name": "Marco Wettstein",
     "email": "maw@panter.ch",
@@ -14,14 +14,14 @@
   },
   "bugs": "https://github.com/panter/manul-draft/issues",
   "peerDependencies": {
+    "@panter/manul-i18n": "*",
     "babel-runtime": "*.*.*",
     "lodash": "*",
     "mantra-core": "^*",
     "react": "*",
     "react-komposer": "*",
     "recompose": "*",
-    "simpl-schema": "*",
-    "@panter/manul-i18n": "*"
+    "simpl-schema": "*"
   },
   "devDependencies": {
     "babel-cli": "^6.24.0",
@@ -36,22 +36,27 @@
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-meteor": "^4.0.1",
+    "eslint-plugin-meteor": "^4.1.0",
     "eslint-plugin-react": "^6.8.0",
     "glob": "^5.0.15",
-    "tape": "^4.2.2"
+    "tape": "^4.2.2",
+    "watch": "^1.0.2"
   },
   "scripts": {
     "prepublish": "npm run compile",
     "test": "babel-node --stage 1 test/harness.js test/**/*.js",
     "compile": "npm run lint && babel src -s -d dist",
-    "lint": "eslint src/**.js"
+    "lint": "eslint src/**.js",
+    "compile:watch": "watch 'npm run compile' src"
   },
   "main": "./dist/index.js",
   "dependencies": {
     "immutable": "^3.8.1",
     "megadraft": "^0.4.26",
     "react-draggable": "^2.2.6",
-    "react-measure": "^1.4.6"
+    "react-measure": "^1.4.6",
+    "react-overlays": "^0.8.0",
+    "react-rnd": "^5.0.9",
+    "recompose": "^0.24.0"
   }
 }
