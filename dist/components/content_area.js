@@ -28,7 +28,19 @@ var _inherits2 = require('babel-runtime/helpers/inherits');
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
+var _withState2 = require('recompose/withState');
+
+var _withState3 = _interopRequireDefault(_withState2);
+
+var _compose2 = require('recompose/compose');
+
+var _compose3 = _interopRequireDefault(_compose2);
+
 var _megadraft = require('megadraft');
+
+var _reactMeasure = require('react-measure');
+
+var _reactMeasure2 = _interopRequireDefault(_reactMeasure);
 
 var _react = require('react');
 
@@ -83,7 +95,11 @@ var Styles = function Styles(_ref) {
   };
 };
 
-var ContentArea = function ContentArea(_ref2) {
+var enhance = (0, _compose3.default)((0, _withState3.default)('dimensions', 'setDimensions', function () {
+  return { top: 0, left: 0, width: 100, height: 100 };
+}), (0, _withState3.default)('editorHasFocus', 'setEditorHasFocus', false));
+
+var ContentArea = enhance(function (_ref2) {
   var className = _ref2.className,
       style = _ref2.style,
       canEdit = _ref2.canEdit,
@@ -104,7 +120,11 @@ var ContentArea = function ContentArea(_ref2) {
       megadraftBlockPlugins = _ref2$megadraftBlockP === undefined ? [] : _ref2$megadraftBlockP,
       _ref2$copyLocales = _ref2.copyLocales,
       copyLocales = _ref2$copyLocales === undefined ? [] : _ref2$copyLocales,
-      copyFromLocale = _ref2.copyFromLocale;
+      copyFromLocale = _ref2.copyFromLocale,
+      setDimensions = _ref2.setDimensions,
+      dimensions = _ref2.dimensions,
+      editorHasFocus = _ref2.editorHasFocus,
+      setEditorHasFocus = _ref2.setEditorHasFocus;
 
   var styles = Styles({ highlightEditable: highlightEditable, isEditing: isEditing });
 
@@ -122,51 +142,70 @@ var ContentArea = function ContentArea(_ref2) {
   };
 
   return _react2.default.createElement(
-    'div',
-    { style: style, className: className },
+    _reactMeasure2.default
+    // shouldMeasure={isEditing}
+    ,
+    { onMeasure: setDimensions
+    },
     _react2.default.createElement(
       'div',
-      {
-        style: styles.base,
-        onClick: function onClick() {
-          return canEdit && highlightEditable && startEditing();
-        }
-      },
+      { style: style, className: className },
       _react2.default.createElement(
         'div',
-        { style: highlightEditable ? { pointerEvents: 'none' } : null },
-        isEditing && _react2.default.createElement(
-          _draggable_window2.default,
-          null,
-          _react2.default.createElement(
-            'div',
+        {
+          style: styles.base,
+          onClick: function onClick() {
+            return canEdit && highlightEditable && startEditing();
+          }
+        },
+        _react2.default.createElement(
+          'div',
+          { style: highlightEditable ? { pointerEvents: 'none' } : null },
+          isEditing && _react2.default.createElement(
+            _draggable_window2.default,
             {
-              className: 'megadraft-floating-window', style: {
-                display: 'flex',
-                flexDirection: 'column',
-                height: 'calc(100% - 50px)'
-              }
+              disableDragging: editorHasFocus,
+              x: Math.max(20, dimensions.left),
+              y: Math.max(20, dimensions.top)
+              /* global window*/
+              , width: Math.max(280, Math.min(window.innerWidth - 40, dimensions.width)),
+              height: Math.max(280, Math.min(window.innerHeight - 40, dimensions.height))
             },
-            renderEditor(blockPluginDialogIsActive || !canEdit || !isEditing),
-            _react2.default.createElement(_area_actions_toolbar2.default, {
-              saveAndClose: saveAndClose,
-              saveAndEdit: saveAndEdit,
-              cancelEditing: cancelEditing,
-              onResize: function onResize(e) {
-                return e.stopPropagation();
+            _react2.default.createElement(
+              'div',
+              {
+                onFocus: function onFocus() {
+                  return setEditorHasFocus(true);
+                },
+
+                onBlur: function onBlur() {
+                  return setEditorHasFocus(false);
+                },
+                className: 'megadraft-floating-window', style: {
+                  display: 'flex',
+                  cursor: 'text',
+                  flexDirection: 'column',
+                  height: 'calc(100% - 50px)'
+                }
               },
-              locale: locale,
-              copyLocales: copyLocales,
-              copyFromLocale: copyFromLocale
-            })
-          )
-        ),
-        renderEditor(true),
-        _react2.default.createElement('div', { style: { clear: 'both' } })
+              renderEditor(blockPluginDialogIsActive || !canEdit || !isEditing),
+              _react2.default.createElement(_area_actions_toolbar2.default, {
+                saveAndClose: saveAndClose,
+                saveAndEdit: saveAndEdit,
+                cancelEditing: cancelEditing,
+                locale: locale,
+                copyLocales: copyLocales,
+                copyFromLocale: copyFromLocale
+              })
+            )
+          ),
+          renderEditor(true),
+          _react2.default.createElement('div', { style: { clear: 'both' } })
+        )
       )
     )
   );
-};
+});
 
 ContentArea.displayName = 'ContentArea';
 

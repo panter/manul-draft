@@ -1,4 +1,6 @@
 import { MegadraftEditor as MegadraftEditorOrg } from 'megadraft';
+import { compose, withState } from 'recompose';
+import Measure from 'react-measure';
 import React from 'react';
 
 import AreaActionsToolbar from './area_actions_toolbar';
@@ -31,7 +33,12 @@ const Styles = ({ highlightEditable, isEditing }) =>
    })
 ;
 
-const ContentArea = ({
+const enhance = compose(
+  withState('dimensions', 'setDimensions', () => ({ top: 0, left: 0, width: 100, height: 100 })),
+  withState('editorHasFocus', 'setEditorHasFocus', false),
+);
+
+const ContentArea = enhance(({
     className,
     style,
     canEdit,
@@ -51,6 +58,10 @@ const ContentArea = ({
     megadraftBlockPlugins = [],
     copyLocales = [],
     copyFromLocale,
+    setDimensions,
+    dimensions,
+    editorHasFocus,
+    setEditorHasFocus,
   }) => {
   const styles = Styles({ highlightEditable, isEditing });
 
@@ -69,28 +80,41 @@ const ContentArea = ({
 
 
   return (
-    <div style={style} className={className}>
-      <div
-        style={styles.base}
-        onClick={() => canEdit && highlightEditable && startEditing()}
-      >
-        <div style={highlightEditable ? { pointerEvents: 'none' } : null}>
-          {isEditing && (
-            <DraggableWindow>
+    <Measure
+      // shouldMeasure={isEditing}
+      onMeasure={setDimensions}
+    >
+      <div style={style} className={className}>
+        <div
+          style={styles.base}
+          onClick={() => canEdit && highlightEditable && startEditing()}
+        >
+          <div style={highlightEditable ? { pointerEvents: 'none' } : null}>
+            {isEditing && (
+            <DraggableWindow
+              disableDragging={editorHasFocus}
+              x={Math.max(20, dimensions.left)}
+              y={Math.max(20, dimensions.top)}
+              /* global window*/
+              width={Math.max(280, Math.min(window.innerWidth - 40, dimensions.width))}
+              height={Math.max(280, Math.min(window.innerHeight - 40, dimensions.height))}
+            >
               <div
+                onFocus={() => setEditorHasFocus(true)}
+
+                onBlur={() => setEditorHasFocus(false)}
                 className="megadraft-floating-window" style={{
                   display: 'flex',
+                  cursor: 'text',
                   flexDirection: 'column',
                   height: 'calc(100% - 50px)',
                 }}
               >
-
                 {renderEditor(blockPluginDialogIsActive || !canEdit || !isEditing)}
                 <AreaActionsToolbar
                   saveAndClose={saveAndClose}
                   saveAndEdit={saveAndEdit}
                   cancelEditing={cancelEditing}
-                  onResize={e => e.stopPropagation()}
                   locale={locale}
                   copyLocales={copyLocales}
                   copyFromLocale={copyFromLocale}
@@ -98,13 +122,14 @@ const ContentArea = ({
               </div>
             </DraggableWindow>
       )}
-          {renderEditor(true)}
-          <div style={{ clear: 'both' }} />
+            {renderEditor(true)}
+            <div style={{ clear: 'both' }} />
+          </div>
         </div>
       </div>
-    </div>
+    </Measure>
   );
-};
+});
 
 
 ContentArea.displayName = 'ContentArea';
