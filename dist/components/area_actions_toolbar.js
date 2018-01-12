@@ -16,10 +16,6 @@ var _button_group = require('./button_group');
 
 var _button_group2 = _interopRequireDefault(_button_group);
 
-var _icon_copy = require('./icon_copy');
-
-var _icon_copy2 = _interopRequireDefault(_icon_copy);
-
 var _component_from_context_or = require('../component_from_context_or');
 
 var _component_from_context_or2 = _interopRequireDefault(_component_from_context_or);
@@ -84,10 +80,10 @@ var AreaActionsToolbar = (0, _component_from_context_or2.default)('AreaActionsTo
                 return copyFromLocale(aLocale);
               }
             },
-            _react2.default.createElement(_icon_copy2.default, null),
             _react2.default.createElement(
               'span',
               null,
+              '\uD83D\uDCD1 ',
               aLocale
             )
           );

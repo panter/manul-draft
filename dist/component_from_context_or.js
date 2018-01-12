@@ -13,7 +13,7 @@ var _getOr2 = require('lodash/fp/getOr');
 
 var _getOr3 = _interopRequireDefault(_getOr2);
 
-var _mantraCore = require('mantra-core');
+var _mantraCore = require('@storybook/mantra-core');
 
 var _react = require('react');
 

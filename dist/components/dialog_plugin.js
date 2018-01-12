@@ -4,15 +4,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _shouldUpdate2 = require('recompose/shouldUpdate');
-
-var _shouldUpdate3 = _interopRequireDefault(_shouldUpdate2);
-
 var _isEqual2 = require('lodash/fp/isEqual');
 
 var _isEqual3 = _interopRequireDefault(_isEqual2);
 
 var _manulI18n = require('@panter/manul-i18n');
+
+var _recompose = require('recompose');
 
 var _react = require('react');
 
@@ -40,7 +38,7 @@ var _component_from_context_or2 = _interopRequireDefault(_component_from_context
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var DialogPlugin = (0, _shouldUpdate3.default)(
+var DialogPlugin = (0, _recompose.shouldUpdate)(
 // we need that because draftjs/megadraft update quite often
 // which messes with things like the file-picker-dialog from the browser
 function (props, nextProps) {
@@ -78,7 +76,7 @@ function (props, nextProps) {
         'Close'
       )
     ),
-    _react2.default.createElement(_form_plugin2.default, {
+    schema && _react2.default.createElement(_form_plugin2.default, {
       i18nNamespace: i18nNamespace,
       autosave: true,
       model: dataMap.toJS(),

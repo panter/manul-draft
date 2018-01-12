@@ -53,7 +53,7 @@ var DialogEntity = function DialogEntity(_ref) {
       'div',
       {
         style: {
-          backgroundColor: 'white',
+          backgroundColor: '#ffffff99',
           padding: 15
         }
       },

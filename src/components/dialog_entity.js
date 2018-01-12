@@ -6,7 +6,14 @@ import FormEntity from './form_entity';
 import Heading from './heading';
 import Button from './button';
 
-const DialogEntity = ({ entityType, setEntity, cancelEntity, removeEntity, schema, ...props }) => {
+const DialogEntity = ({
+  entityType,
+  setEntity,
+  cancelEntity,
+  removeEntity,
+  schema,
+  ...props
+}) => {
   const dataMap = new Immutable.Map(props);
   return (
     <div
@@ -17,7 +24,7 @@ const DialogEntity = ({ entityType, setEntity, cancelEntity, removeEntity, schem
     >
       <div
         style={{
-          backgroundColor: 'white',
+          backgroundColor: '#ffffff99',
           padding: 15,
         }}
       >
@@ -27,21 +34,21 @@ const DialogEntity = ({ entityType, setEntity, cancelEntity, removeEntity, schem
         <FormEntity
           i18nNamespace={`cm.entities.${entityType}`}
           additionalActions={
-            <Button small onClick={removeEntity}>Remove</Button>
+            <Button small onClick={removeEntity}>
+              Remove
+            </Button>
           }
           dataMap={dataMap.toJS()}
           schema={schema}
           autosave={false}
-          onSubmit={(data) => {
+          onSubmit={data => {
             cancelEntity();
             setEntity(schema.clean(data));
           }}
         />
       </div>
     </div>
-
   );
 };
-
 
 export default DialogEntity;

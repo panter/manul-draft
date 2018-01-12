@@ -14,12 +14,12 @@
   },
   "bugs": "https://github.com/panter/manul-draft/issues",
   "peerDependencies": {
+    "@babel/runtime": "*.*.*",
     "@panter/manul-i18n": "*",
-    "babel-runtime": "*.*.*",
+    "@storybook/mantra-core": "^*",
+    "@storybook/react-komposer": "*",
     "lodash": "*",
-    "mantra-core": "^*",
     "react": "*",
-    "react-komposer": "*",
     "recompose": "*",
     "simpl-schema": "*"
   },
@@ -34,6 +34,7 @@
     "babel-preset-stage-2": "6.x.x",
     "eslint": "^3.12.2",
     "eslint-config-airbnb": "^13.0.0",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-meteor": "^4.1.0",
@@ -51,12 +52,12 @@
   },
   "main": "./dist/index.js",
   "dependencies": {
-    "immutable": "^3.8.1",
-    "megadraft": "^0.4.26",
+    "immutable": "^3.8.2",
+    "megadraft": "^0.4.33",
     "react-draggable": "^2.2.6",
     "react-measure": "^1.4.6",
-    "react-overlays": "^0.8.0",
+    "react-overlays": "^0.8.3",
     "react-rnd": "^5.0.9",
-    "recompose": "^0.24.0"
+    "react-window-dimensions": "^1.0.1"
   }
 }

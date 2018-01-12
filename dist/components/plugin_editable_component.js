@@ -80,8 +80,12 @@ var PluginEditableComponent = function PluginEditableComponent(_ref2) {
       dimensions = _ref2$dimensions === undefined ? {} : _ref2$dimensions,
       windowWidth = _ref2.windowWidth;
 
-  var styles = Styles({ showDialog: showDialog, dimensions: dimensions, hasCustomHover: hasCustomHover, windowWidth: windowWidth });
-
+  var styles = Styles({
+    showDialog: showDialog,
+    dimensions: dimensions,
+    hasCustomHover: hasCustomHover,
+    windowWidth: windowWidth
+  });
   return _react2.default.createElement(
     'div',
     { style: styles.base },
@@ -106,18 +110,21 @@ var PluginEditableComponent = function PluginEditableComponent(_ref2) {
       {
         style: styles.content,
         onClick: function onClick(e) {
-          e.stopPropagation();setShowDialog(!showDialog);
+          e.stopPropagation();
+          setShowDialog(!showDialog);
         }
       },
       _react2.default.createElement(
         'div',
-        { style: { pointerEvents: !hasCustomHover && 'none' } },
+        {
+          style: {
+            outline: showDialog && '1px dotted black',
+            pointerEvents: !hasCustomHover && 'none'
+          }
+        },
         _react2.default.createElement(
           _reactMeasure2.default,
-          {
-            shouldMeasure: showDialog,
-            onMeasure: setDimensions
-          },
+          { shouldMeasure: showDialog, onMeasure: setDimensions },
           children
         )
       )
