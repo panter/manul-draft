@@ -13,7 +13,7 @@ export const depsMapper = context => ({
 });
 
 export default (componentName, DefaultComponent) =>
-  composeAll(useDeps(depsMapper))(({ components, ...props }) => {
+  composeAll(useDeps(depsMapper))(({ components, innerRef, ...props }) => {
     const Component = getOr(DefaultComponent, componentName, components);
-    return <Component {...props} />;
+    return <Component ref={innerRef} {...props} />;
   });

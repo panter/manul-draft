@@ -5,6 +5,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.depsMapper = undefined;
 
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
@@ -38,10 +42,11 @@ var depsMapper = exports.depsMapper = function depsMapper(_context) {
 exports.default = function (componentName, DefaultComponent) {
   return (0, _mantraCore.composeAll)((0, _mantraCore.useDeps)(depsMapper))(function (_ref) {
     var components = _ref.components,
-        props = (0, _objectWithoutProperties3.default)(_ref, ['components']);
+        innerRef = _ref.innerRef,
+        props = (0, _objectWithoutProperties3.default)(_ref, ['components', 'innerRef']);
 
     var Component = (0, _getOr3.default)(DefaultComponent, componentName, components);
-    return _react2.default.createElement(Component, props);
+    return _react2.default.createElement(Component, (0, _extends3.default)({ ref: innerRef }, props));
   });
 };
 //# sourceMappingURL=component_from_context_or.js.map

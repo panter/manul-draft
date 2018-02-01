@@ -20,19 +20,19 @@ const Styles = ({ highlightEditable, isEditing }) => ({
       ? {
           outline: '1px dotted black',
           padding: 15,
-          margin: -15,
+          margin: -15
         }
       : {}),
     ...(isEditing
       ? {
           outline: '1px dotted black',
           padding: 15,
-          margin: -15,
+          margin: -15
         }
       : {}),
     cursor: highlightEditable ? 'pointer' : null,
-    position: 'relative',
-  },
+    position: 'relative'
+  }
 });
 
 const enhance = compose(
@@ -40,9 +40,9 @@ const enhance = compose(
     top: 0,
     left: 0,
     width: 100,
-    height: 100,
+    height: 100
   })),
-  withState('editorHasFocus', 'setEditorHasFocus', false),
+  withState('editorHasFocus', 'setEditorHasFocus', false)
 );
 
 const ContentAreaWrapper = ({
@@ -66,7 +66,7 @@ const ContentAreaWrapper = ({
   editorHasFocus,
   setEditorHasFocus,
   editorReadOnly,
-  editor,
+  editor
 }) => {
   const styles = Styles({ highlightEditable, isEditing });
 
@@ -108,7 +108,7 @@ const ContentAreaEditor = ({
   cancelEditing,
   locale,
   copyLocales,
-  copyFromLocale,
+  copyFromLocale
 }) => (
   <div>
     <MegadraftEditor
@@ -131,7 +131,7 @@ const ContentAreaEditor = ({
           backgroundColor: '#ffffff99',
           bottom: 0,
           left: 0,
-          right: 0,
+          right: 0
         }}
       >
         <AreaActionsToolbar
@@ -174,7 +174,7 @@ const ContentArea = enhance(
     setDimensions,
     dimensions,
     editorHasFocus,
-    setEditorHasFocus,
+    setEditorHasFocus
   }) => {
     const editorProps = {
       contentId,
@@ -190,7 +190,7 @@ const ContentArea = enhance(
       cancelEditing,
       locale,
       copyLocales,
-      copyFromLocale,
+      copyFromLocale
     };
     const wrapperProps = {
       className,
@@ -211,7 +211,7 @@ const ContentArea = enhance(
       setDimensions,
       dimensions,
       editorHasFocus,
-      setEditorHasFocus,
+      setEditorHasFocus
     };
 
     return (
@@ -221,7 +221,7 @@ const ContentArea = enhance(
         editorReadOnly={<ContentAreaEditor readOnly {...editorProps} />}
       />
     );
-  },
+  }
 );
 
 ContentArea.displayName = 'ContentArea';
