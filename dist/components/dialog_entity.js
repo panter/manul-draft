@@ -41,6 +41,7 @@ var DialogEntity = function DialogEntity(_ref) {
       props = (0, _objectWithoutProperties3.default)(_ref, ['entityType', 'setEntity', 'cancelEntity', 'removeEntity', 'schema']);
 
   var dataMap = new _immutable2.default.Map(props);
+  var formRef = void 0;
   return _react2.default.createElement(
     'div',
     {
@@ -53,7 +54,7 @@ var DialogEntity = function DialogEntity(_ref) {
       'div',
       {
         style: {
-          backgroundColor: 'white',
+          backgroundColor: '#ffffff',
           padding: 15
         }
       },
@@ -67,15 +68,27 @@ var DialogEntity = function DialogEntity(_ref) {
         )
       ),
       _react2.default.createElement(_form_entity2.default, {
+        innerRef: function innerRef(el) {
+          return formRef = el;
+        },
         i18nNamespace: 'cm.entities.' + entityType,
         additionalActions: _react2.default.createElement(
           _button2.default,
-          { small: true, onClick: removeEntity },
+          {
+            small: true,
+            onClick: function onClick() {
+              removeEntity();
+            }
+          },
           'Remove'
         ),
-        dataMap: dataMap.toJS(),
+        model: dataMap.toJS(),
         schema: schema,
         autosave: false,
+        onClick: function onClick(event) {
+          // dirty workaround for https://github.com/globocom/megadraft/issues/188
+          event.target.focus();
+        },
         onSubmit: function onSubmit(data) {
           cancelEntity();
           setEntity(schema.clean(data));

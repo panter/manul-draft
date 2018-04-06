@@ -9,26 +9,6 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _onlyUpdateForKeys2 = require('recompose/onlyUpdateForKeys');
-
-var _onlyUpdateForKeys3 = _interopRequireDefault(_onlyUpdateForKeys2);
-
-var _withHandlers2 = require('recompose/withHandlers');
-
-var _withHandlers3 = _interopRequireDefault(_withHandlers2);
-
-var _withPropsOnChange2 = require('recompose/withPropsOnChange');
-
-var _withPropsOnChange3 = _interopRequireDefault(_withPropsOnChange2);
-
-var _withState2 = require('recompose/withState');
-
-var _withState3 = _interopRequireDefault(_withState2);
-
-var _withProps2 = require('recompose/withProps');
-
-var _withProps3 = _interopRequireDefault(_withProps2);
-
 var _mapValues2 = require('lodash/fp/mapValues');
 
 var _mapValues3 = _interopRequireDefault(_mapValues2);
@@ -69,13 +49,19 @@ var _any2 = require('lodash/fp/any');
 
 var _any3 = _interopRequireDefault(_any2);
 
-var _mantraCore = require('mantra-core');
-
 var _megadraft = require('megadraft');
+
+var _mantraCore = require('@storybook/mantra-core');
+
+var _recompose = require('recompose');
 
 var _content_area = require('../components/content_area');
 
 var _content_area2 = _interopRequireDefault(_content_area);
+
+var _composeWithTracker = require('../utils/composeWithTracker');
+
+var _composeWithTracker2 = _interopRequireDefault(_composeWithTracker);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -181,10 +167,10 @@ var depsMapper = exports.depsMapper = function depsMapper(_context4, actions) {
   }, _context4.manulDraft);
 };
 
-exports.default = (0, _mantraCore.composeAll)((0, _mantraCore.composeWithTracker)(i18nComposer),
+exports.default = (0, _mantraCore.composeAll)((0, _composeWithTracker2.default)(i18nComposer),
 // wait for https://github.com/acdlite/recompose/issues/259
 // this here is a dirty workaround
-(0, _withPropsOnChange3.default)(['initialEditorState'], function (_ref5) {
+(0, _recompose.withPropsOnChange)(['initialEditorState'], function (_ref5) {
   var initialEditorState = _ref5.initialEditorState,
       setEditorState = _ref5.setEditorState;
 
@@ -192,7 +178,7 @@ exports.default = (0, _mantraCore.composeAll)((0, _mantraCore.composeWithTracker
   (0, _defer3.default)(function () {
     return setEditorState(initialEditorState);
   });
-}), (0, _withHandlers3.default)({
+}), (0, _recompose.withHandlers)({
   saveAndClose: function saveAndClose(_ref6) {
     var save = _ref6.save,
         cancelEditing = _ref6.cancelEditing,
@@ -200,7 +186,11 @@ exports.default = (0, _mantraCore.composeAll)((0, _mantraCore.composeWithTracker
         contentId = _ref6.contentId,
         locale = _ref6.locale;
     return function () {
-      save({ contentId: contentId, locale: locale, editor: _megadraft.DraftJS.convertToRaw(editorState.getCurrentContent()) }, function (error) {
+      save({
+        contentId: contentId,
+        locale: locale,
+        editor: _megadraft.DraftJS.convertToRaw(editorState.getCurrentContent())
+      }, function (error) {
         return !error && cancelEditing(false);
       });
     };
@@ -211,7 +201,11 @@ exports.default = (0, _mantraCore.composeAll)((0, _mantraCore.composeWithTracker
         contentId = _ref7.contentId,
         locale = _ref7.locale;
     return function () {
-      save({ contentId: contentId, locale: locale, editor: _megadraft.DraftJS.convertToRaw(editorState.getCurrentContent()) });
+      save({
+        contentId: contentId,
+        locale: locale,
+        editor: _megadraft.DraftJS.convertToRaw(editorState.getCurrentContent())
+      });
     };
   },
   cancel: function cancel(_ref8) {
@@ -223,15 +217,15 @@ exports.default = (0, _mantraCore.composeAll)((0, _mantraCore.composeWithTracker
       cancelEditing(false);
     };
   }
-}), (0, _withProps3.default)(function (_ref9) {
+}), (0, _recompose.withProps)(function (_ref9) {
   var editorState = _ref9.editorState;
   return {
     blockPluginDialogIsActive: (0, _any3.default)(function (block) {
       return block.getData().get('showDialog');
     })(editorState.getCurrentContent().getBlocksAsArray())
   };
-}), (0, _withState3.default)('editorState', 'setEditorState', function (_ref10) {
+}), (0, _recompose.withState)('editorState', 'setEditorState', function (_ref10) {
   var initialEditorState = _ref10.initialEditorState;
   return initialEditorState;
-}), (0, _mantraCore.composeWithTracker)(dataComposer), (0, _mantraCore.compose)(pluginComposer), (0, _mantraCore.composeWithTracker)(stateComposer), (0, _mantraCore.useDeps)(depsMapper), (0, _onlyUpdateForKeys3.default)(['contentId']))(_content_area2.default);
+}), (0, _composeWithTracker2.default)(dataComposer), (0, _mantraCore.compose)(pluginComposer), (0, _composeWithTracker2.default)(stateComposer), (0, _mantraCore.useDeps)(depsMapper), (0, _recompose.onlyUpdateForKeys)(['contentId']))(_content_area2.default);
 //# sourceMappingURL=content_area.js.map

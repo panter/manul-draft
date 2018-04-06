@@ -3,13 +3,16 @@ import Measure from 'react-measure';
 import Draggable from 'react-draggable';
 import DialogPlugin from './dialog_plugin';
 
-
 const Styles = ({ windowWidth, showDialog, dimensions = {} }) => {
   const margin = 15;
   const dialogWidth = 320;
   const dialogLeftPositionMax = dimensions.width + margin;
-  const dialogLeftPositionMin = windowWidth - dimensions.left - dialogWidth - margin;
-  const dialogLeftPosition = Math.min(dialogLeftPositionMax, dialogLeftPositionMin);
+  const dialogLeftPositionMin =
+    windowWidth - dimensions.left - dialogWidth - margin;
+  const dialogLeftPosition = Math.min(
+    dialogLeftPositionMax,
+    dialogLeftPositionMin,
+  );
   return {
     base: {
       position: 'relative',
@@ -40,8 +43,7 @@ const Styles = ({ windowWidth, showDialog, dimensions = {} }) => {
       padding: 10,
     },
   };
-}
-;
+};
 const PluginEditableComponent = ({
   i18nNamespace,
   schema,
@@ -58,33 +60,42 @@ const PluginEditableComponent = ({
   windowWidth,
   // components from context
 }) => {
-  const styles = Styles({ showDialog, dimensions, hasCustomHover, windowWidth });
-
+  const styles = Styles({
+    showDialog,
+    dimensions,
+    hasCustomHover,
+    windowWidth,
+  });
   return (
     <div style={styles.base}>
-      {showDialog && <Draggable>
-        <div style={styles.dialog}>
-          <DialogPlugin
-            cancel={cancel}
-            dataMap={dataMap}
-            remove={remove}
-            i18nNamespace={i18nNamespace}
-            updateData={updateData}
-            schema={schema}
-          />
-
-        </div>
-      </Draggable> }
+      {showDialog && (
+        <Draggable>
+          <div style={styles.dialog}>
+            <DialogPlugin
+              cancel={cancel}
+              dataMap={dataMap}
+              remove={remove}
+              i18nNamespace={i18nNamespace}
+              updateData={updateData}
+              schema={schema}
+            />
+          </div>
+        </Draggable>
+      )}
       <div
         style={styles.content}
-        onClick={(e) => { e.stopPropagation(); setShowDialog(!showDialog); }}
+        onClick={e => {
+          e.stopPropagation();
+          setShowDialog(!showDialog);
+        }}
       >
-        <div style={{ pointerEvents: !hasCustomHover && 'none' }}>
-
-          <Measure
-            shouldMeasure={showDialog}
-            onMeasure={setDimensions}
-          >
+        <div
+          style={{
+            outline: showDialog && '1px dotted black',
+            pointerEvents: !hasCustomHover && 'none',
+          }}
+        >
+          <Measure shouldMeasure={showDialog} onMeasure={setDimensions}>
             {children}
           </Measure>
         </div>
@@ -92,6 +103,5 @@ const PluginEditableComponent = ({
     </div>
   );
 };
-
 
 export default PluginEditableComponent;
