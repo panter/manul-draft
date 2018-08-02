@@ -49,9 +49,27 @@ var _any2 = require('lodash/fp/any');
 
 var _any3 = _interopRequireDefault(_any2);
 
-var _megadraft = require('megadraft');
+var _onlyUpdateForKeys2 = require('recompose/onlyUpdateForKeys');
 
-var _recompose = require('recompose');
+var _onlyUpdateForKeys3 = _interopRequireDefault(_onlyUpdateForKeys2);
+
+var _withHandlers2 = require('recompose/withHandlers');
+
+var _withHandlers3 = _interopRequireDefault(_withHandlers2);
+
+var _withPropsOnChange2 = require('recompose/withPropsOnChange');
+
+var _withPropsOnChange3 = _interopRequireDefault(_withPropsOnChange2);
+
+var _withState2 = require('recompose/withState');
+
+var _withState3 = _interopRequireDefault(_withState2);
+
+var _withProps2 = require('recompose/withProps');
+
+var _withProps3 = _interopRequireDefault(_withProps2);
+
+var _megadraft = require('megadraft');
 
 var _mantraCore = require('@storybook/mantra-core');
 
@@ -81,6 +99,7 @@ var dataComposer = exports.dataComposer = function dataComposer(_ref, onData) {
   var contentLoaded = Meteor.subscribe('contents.one', contentId).ready();
   var locale = i18n.getLocale();
   var content = Collections.Contents.findOne(contentId);
+
   if (contentLoaded) {
     var initialEditorState = (0, _megadraft.editorStateFromRaw)(content ? (0, _get3.default)('value.' + locale, content) : sampleContent, new _megadraft.DraftJS.CompositeDecorator(entities || []));
     onData(null, { content: content, locale: locale, initialEditorState: initialEditorState });
@@ -148,7 +167,7 @@ var depsMapper = exports.depsMapper = function depsMapper(_context4, actions) {
 exports.default = (0, _mantraCore.composeAll)((0, _composeWithTracker2.default)(i18nComposer),
 // wait for https://github.com/acdlite/recompose/issues/259
 // this here is a dirty workaround
-(0, _recompose.withPropsOnChange)(['initialEditorState'], function (_ref4) {
+(0, _withPropsOnChange3.default)(['initialEditorState'], function (_ref4) {
   var initialEditorState = _ref4.initialEditorState,
       setEditorState = _ref4.setEditorState;
 
@@ -156,7 +175,7 @@ exports.default = (0, _mantraCore.composeAll)((0, _composeWithTracker2.default)(
   (0, _defer3.default)(function () {
     return setEditorState(initialEditorState);
   });
-}), (0, _recompose.withHandlers)({
+}), (0, _withHandlers3.default)({
   saveAndClose: function saveAndClose(_ref5) {
     var save = _ref5.save,
         cancelEditing = _ref5.cancelEditing,
@@ -195,17 +214,17 @@ exports.default = (0, _mantraCore.composeAll)((0, _composeWithTracker2.default)(
       cancelEditing(false);
     };
   }
-}), (0, _recompose.withProps)(function (_ref8) {
+}), (0, _withProps3.default)(function (_ref8) {
   var editorState = _ref8.editorState;
   return {
     blockPluginDialogIsActive: (0, _any3.default)(function (block) {
       return block.getData().get('showDialog');
     })(editorState.getCurrentContent().getBlocksAsArray())
   };
-}), (0, _recompose.withState)('editorState', 'setEditorState', function (_ref9) {
+}), (0, _withState3.default)('editorState', 'setEditorState', function (_ref9) {
   var initialEditorState = _ref9.initialEditorState;
   return initialEditorState;
-}), (0, _composeWithTracker2.default)(dataComposer), (0, _recompose.withProps)(function (_ref10) {
+}), (0, _composeWithTracker2.default)(dataComposer), (0, _withProps3.default)(function (_ref10) {
   var _ref10$blockPluginPro = _ref10.blockPluginProps,
       blockPluginProps = _ref10$blockPluginPro === undefined ? {} : _ref10$blockPluginPro,
       isEditing = _ref10.isEditing,
@@ -221,5 +240,5 @@ exports.default = (0, _mantraCore.composeAll)((0, _composeWithTracker2.default)(
       return e.inputComponent;
     }))(entities)
   };
-}), (0, _composeWithTracker2.default)(stateComposer), (0, _mantraCore.useDeps)(depsMapper), (0, _recompose.onlyUpdateForKeys)(['contentId']))(_content_area2.default);
+}), (0, _composeWithTracker2.default)(stateComposer), (0, _mantraCore.useDeps)(depsMapper), (0, _onlyUpdateForKeys3.default)(['contentId']))(_content_area2.default);
 //# sourceMappingURL=content_area.js.map

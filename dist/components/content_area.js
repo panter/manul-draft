@@ -28,6 +28,14 @@ var _inherits2 = require('babel-runtime/helpers/inherits');
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
+var _withState2 = require('recompose/withState');
+
+var _withState3 = _interopRequireDefault(_withState2);
+
+var _compose2 = require('recompose/compose');
+
+var _compose3 = _interopRequireDefault(_compose2);
+
 var _megadraft = require('megadraft');
 
 var _reactOverlays = require('react-overlays');
@@ -35,8 +43,6 @@ var _reactOverlays = require('react-overlays');
 var _ModalManager = require('react-overlays/lib/ModalManager');
 
 var _ModalManager2 = _interopRequireDefault(_ModalManager);
-
-var _recompose = require('recompose');
 
 var _reactMeasure = require('react-measure');
 
@@ -91,14 +97,14 @@ var Styles = function Styles(_ref) {
   };
 };
 
-var enhance = (0, _recompose.compose)((0, _recompose.withState)('dimensions', 'setDimensions', function () {
+var enhance = (0, _compose3.default)((0, _withState3.default)('dimensions', 'setDimensions', function () {
   return {
     top: 0,
     left: 0,
     width: 100,
     height: 100
   };
-}), (0, _recompose.withState)('editorHasFocus', 'setEditorHasFocus', false));
+}), (0, _withState3.default)('editorHasFocus', 'setEditorHasFocus', false));
 
 var ContentAreaWrapper = function ContentAreaWrapper(_ref2) {
   var className = _ref2.className,
@@ -181,6 +187,7 @@ var ContentAreaEditor = function ContentAreaEditor(_ref3) {
       entityInputs: entityInputs,
       blockRenderMap: blockRenderMap,
       onChange: setEditorState
+
     }),
     isEditing && _react2.default.createElement(
       _reactOverlays.Modal,

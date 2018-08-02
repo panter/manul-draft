@@ -1,4 +1,3 @@
-import { DraftJS, editorStateFromRaw } from 'megadraft';
 import {
   withProps,
   withState,
@@ -6,6 +5,8 @@ import {
   withHandlers,
   onlyUpdateForKeys
 } from 'recompose';
+import { DraftJS, editorStateFromRaw } from 'megadraft';
+
 import {
   any,
   invoke,
@@ -31,6 +32,7 @@ export const dataComposer = (
   const contentLoaded = Meteor.subscribe('contents.one', contentId).ready();
   const locale = i18n.getLocale();
   const content = Collections.Contents.findOne(contentId);
+
   if (contentLoaded) {
     const initialEditorState = editorStateFromRaw(
       content ? get(`value.${locale}`, content) : sampleContent,

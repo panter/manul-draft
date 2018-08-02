@@ -7,5 +7,5 @@ export {
   ContentArea,
   createBlockPlugin,
   createEntityComponent,
-  createFormEntityInput,
+  createFormEntityInput
 };

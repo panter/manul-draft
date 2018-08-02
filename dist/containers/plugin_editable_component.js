@@ -9,6 +9,18 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
+var _withProps2 = require('recompose/withProps');
+
+var _withProps3 = _interopRequireDefault(_withProps2);
+
+var _withHandlers2 = require('recompose/withHandlers');
+
+var _withHandlers3 = _interopRequireDefault(_withHandlers2);
+
+var _withState2 = require('recompose/withState');
+
+var _withState3 = _interopRequireDefault(_withState2);
+
 var _debounce2 = require('lodash/fp/debounce');
 
 var _debounce3 = _interopRequireDefault(_debounce2);
@@ -18,8 +30,6 @@ var _delay2 = require('lodash/fp/delay');
 var _delay3 = _interopRequireDefault(_delay2);
 
 var _mantraCore = require('@storybook/mantra-core');
-
-var _recompose = require('recompose');
 
 var _reactWindowDimensions = require('react-window-dimensions');
 
@@ -39,13 +49,13 @@ var depsMapper = exports.depsMapper = function depsMapper(_context, actions) {
   }, _context.manulDraft);
 };
 
-exports.default = (0, _mantraCore.composeAll)((0, _recompose.withState)('dimensions', 'setDimensions', function () {}), (0, _reactWindowDimensions2.default)({
+exports.default = (0, _mantraCore.composeAll)((0, _withState3.default)('dimensions', 'setDimensions', function () {}), (0, _reactWindowDimensions2.default)({
   /* global window */
   take: function take() {
     return { windowWidth: window.innerWidth };
   },
   debounce: (0, _debounce3.default)(300)
-}), (0, _recompose.withHandlers)({
+}), (0, _withHandlers3.default)({
   remove: function remove(_ref) {
     var setShowDialog = _ref.setShowDialog,
         container = _ref.container;
@@ -73,10 +83,10 @@ exports.default = (0, _mantraCore.composeAll)((0, _recompose.withState)('dimensi
       container.updateData(newData);
     };
   }
-}), (0, _recompose.withProps)(function (_ref4) {
+}), (0, _withProps3.default)(function (_ref4) {
   var dataMap = _ref4.dataMap;
   return { showDialog: dataMap.get('showDialog') };
-}), (0, _recompose.withHandlers)({
+}), (0, _withHandlers3.default)({
   setShowDialog: function setShowDialog(_ref5) {
     var container = _ref5.container,
         dataMap = _ref5.dataMap;

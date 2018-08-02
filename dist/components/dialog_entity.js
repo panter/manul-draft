@@ -41,6 +41,7 @@ var DialogEntity = function DialogEntity(_ref) {
       props = (0, _objectWithoutProperties3.default)(_ref, ['entityType', 'setEntity', 'cancelEntity', 'removeEntity', 'schema']);
 
   var dataMap = new _immutable2.default.Map(props);
+
   return _react2.default.createElement(
     'div',
     {
@@ -71,7 +72,6 @@ var DialogEntity = function DialogEntity(_ref) {
         additionalActions: _react2.default.createElement(
           _button2.default,
           {
-            autofocus: true,
             small: true,
             onClick: function onClick() {
               removeEntity();
@@ -87,6 +87,7 @@ var DialogEntity = function DialogEntity(_ref) {
           event.target.focus();
         },
         onSubmit: function onSubmit(data) {
+          console.log('on submit');
           cancelEntity();
           setEntity(schema.clean(data));
         }

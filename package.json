@@ -1,7 +1,7 @@
 {
   "name": "@panter/manul-draft",
   "description": "",
-  "version": "0.2.0-beta.0",
+  "version": "0.2.0",
   "author": {
     "name": "Marco Wettstein",
     "email": "maw@panter.ch",
@@ -18,10 +18,7 @@
     "@panter/manul-i18n": "*",
     "@storybook/mantra-core": "^*",
     "@storybook/react-komposer": "*",
-    "lodash": "*",
-    "react": "*",
-    "recompose": "*",
-    "simpl-schema": "*"
+    "react": "*"
   },
   "devDependencies": {
     "babel-cli": "^6.24.0",
@@ -53,11 +50,14 @@
   "main": "./dist/index.js",
   "dependencies": {
     "immutable": "^3.8.2",
-    "megadraft": "^0.5.1",
+    "megadraft": "https://github.com/macrozone/megadraft.git#0d09453ac9b5b4205199f8456ca68acd5a6889ff",
     "react-draggable": "^2.2.6",
     "react-measure": "^1.4.6",
     "react-overlays": "^0.8.3",
     "react-rnd": "^5.0.9",
-    "react-window-dimensions": "^1.0.1"
+    "react-window-dimensions": "^1.0.1",
+    "recompose": ">=0.21.2",
+    "lodash": "^4.0.0",
+    "simpl-schema": "^1.0.0"
   }
 }

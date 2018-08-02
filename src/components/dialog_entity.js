@@ -15,6 +15,7 @@ const DialogEntity = ({
   ...props
 }) => {
   const dataMap = new Immutable.Map(props);
+
   return (
     <div
       style={{
@@ -35,7 +36,6 @@ const DialogEntity = ({
           i18nNamespace={`cm.entities.${entityType}`}
           additionalActions={
             <Button
-              autofocus
               small
               onClick={() => {
                 removeEntity();
@@ -52,6 +52,7 @@ const DialogEntity = ({
             event.target.focus();
           }}
           onSubmit={data => {
+            console.log('on submit');
             cancelEntity();
             setEntity(schema.clean(data));
           }}

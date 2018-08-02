@@ -121,6 +121,7 @@ const ContentAreaEditor = ({
       entityInputs={entityInputs}
       blockRenderMap={blockRenderMap}
       onChange={setEditorState}
+      
     />
     {isEditing && (
       <Modal
