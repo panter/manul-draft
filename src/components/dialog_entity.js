@@ -15,7 +15,6 @@ const DialogEntity = ({
   ...props
 }) => {
   const dataMap = new Immutable.Map(props);
-  let formRef;
   return (
     <div
       style={{
@@ -33,10 +32,10 @@ const DialogEntity = ({
           <T>{`cm.entities.${entityType}.label`}</T>
         </Heading>
         <FormEntity
-          innerRef={el => (formRef = el)}
           i18nNamespace={`cm.entities.${entityType}`}
           additionalActions={
             <Button
+              autofocus
               small
               onClick={() => {
                 removeEntity();

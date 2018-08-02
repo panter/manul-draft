@@ -86,6 +86,7 @@ var PluginEditableComponent = function PluginEditableComponent(_ref2) {
     hasCustomHover: hasCustomHover,
     windowWidth: windowWidth
   });
+
   return _react2.default.createElement(
     'div',
     { style: styles.base },

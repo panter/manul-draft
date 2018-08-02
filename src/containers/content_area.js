@@ -1,5 +1,12 @@
 import { DraftJS, editorStateFromRaw } from 'megadraft';
 import {
+  withProps,
+  withState,
+  withPropsOnChange,
+  withHandlers,
+  onlyUpdateForKeys
+} from 'recompose';
+import {
   any,
   invoke,
   defer,
@@ -9,23 +16,16 @@ import {
   flow,
   get,
   keyBy,
-  mapValues,
+  mapValues
 } from 'lodash/fp';
-import { useDeps, composeAll, compose } from '@storybook/mantra-core';
-import {
-  withProps,
-  withState,
-  withPropsOnChange,
-  withHandlers,
-  onlyUpdateForKeys,
-} from 'recompose';
+import { useDeps, composeAll } from '@storybook/mantra-core';
 
 import ContentArea from '../components/content_area';
 import composeWithTracker from '../utils/composeWithTracker';
 
 export const dataComposer = (
   { context, contentId, entities = [], sampleContent = null },
-  onData,
+  onData
 ) => {
   const { Meteor, Collections, i18n } = context();
   const contentLoaded = Meteor.subscribe('contents.one', contentId).ready();
@@ -34,7 +34,7 @@ export const dataComposer = (
   if (contentLoaded) {
     const initialEditorState = editorStateFromRaw(
       content ? get(`value.${locale}`, content) : sampleContent,
-      new DraftJS.CompositeDecorator(entities || []),
+      new DraftJS.CompositeDecorator(entities || [])
     );
     onData(null, { content, locale, initialEditorState });
   }
@@ -49,35 +49,19 @@ export const stateComposer = ({ context, contentId }, onData) => {
   onData(null, { canEdit, isEditing, cancelEditing, startEditing });
 };
 
-export const pluginComposer = (
-  { blockPluginProps = {}, isEditing, entities = [], blockPlugins = [] },
-  onData,
-) => {
-  // megadraft has no concept of editing/readonly (yet)
-  // so we init every plugin with the editingState
-  // in order to display a different component when isEditing/not isEditing
-  onData(null, {
-    megadraftBlockPlugins: blockPlugins.map(plugin =>
-      plugin({ isEditing, blockPluginProps }),
-    ),
-    entityInputs: flow(keyBy('_id'), mapValues(e => e.inputComponent))(
-      entities,
-    ),
-  });
-};
-
 export const i18nComposer = (
   { context, content, editorState, setEditorState },
-  onData,
+  onData
 ) => {
   const { manulDraft } = context();
   const highlightEditable = invoke('highlightEditable', manulDraft);
   // keys in value are locales where we can copy from
   const copyLocales =
     content &&
-    flow(keys, filter(locale => !isEmpty(get(['value', locale], content))))(
-      content.value,
-    );
+    flow(
+      keys,
+      filter(locale => !isEmpty(get(['value', locale], content)))
+    )(content.value);
 
   const copyFromLocale = fromLocale => {
     // clone the content
@@ -88,12 +72,12 @@ export const i18nComposer = (
       const newContent = DraftJS.Modifier.replaceWithFragment(
         editorState.getCurrentContent(),
         editorState.getSelection(),
-        newContentState.getBlockMap(),
+        newContentState.getBlockMap()
       );
       const newEditorState = DraftJS.EditorState.push(
         editorState,
         newContent,
-        'insert-fragment',
+        'insert-fragment'
       );
       setEditorState(newEditorState);
     }
@@ -104,7 +88,7 @@ export const i18nComposer = (
 export const depsMapper = (context, actions) => ({
   context: () => context,
   save: actions.cm.save,
-  ...context.manulDraft,
+  ...context.manulDraft
 });
 
 export default composeAll(
@@ -116,7 +100,7 @@ export default composeAll(
     ({ initialEditorState, setEditorState }) => {
       /* eslint lodash-fp/no-unused-result: 0*/
       defer(() => setEditorState(initialEditorState));
-    },
+    }
   ),
   withHandlers({
     saveAndClose: ({
@@ -124,42 +108,57 @@ export default composeAll(
       cancelEditing,
       editorState,
       contentId,
-      locale,
+      locale
     }) => () => {
       save(
         {
           contentId,
           locale,
-          editor: DraftJS.convertToRaw(editorState.getCurrentContent()),
+          editor: DraftJS.convertToRaw(editorState.getCurrentContent())
         },
-        error => !error && cancelEditing(false),
+        error => !error && cancelEditing(false)
       );
     },
     saveAndEdit: ({ save, editorState, contentId, locale }) => () => {
       save({
         contentId,
         locale,
-        editor: DraftJS.convertToRaw(editorState.getCurrentContent()),
+        editor: DraftJS.convertToRaw(editorState.getCurrentContent())
       });
     },
     cancel: ({ cancelEditing, setEditorState, initialEditorState }) => () => {
       setEditorState(initialEditorState);
       cancelEditing(false);
-    },
+    }
   }),
   withProps(({ editorState }) => ({
     blockPluginDialogIsActive: any(block => block.getData().get('showDialog'))(
-      editorState.getCurrentContent().getBlocksAsArray(),
-    ),
+      editorState.getCurrentContent().getBlocksAsArray()
+    )
   })),
   withState(
     'editorState',
     'setEditorState',
-    ({ initialEditorState }) => initialEditorState,
+    ({ initialEditorState }) => initialEditorState
   ),
   composeWithTracker(dataComposer),
-  compose(pluginComposer),
+  withProps(
+    ({
+      blockPluginProps = {},
+      isEditing,
+      entities = [],
+      blockPlugins = []
+    }) => ({
+      megadraftBlockPlugins: blockPlugins.map(plugin =>
+        plugin({ isEditing, blockPluginProps })
+      ),
+      entityInputs: flow(
+        keyBy('_id'),
+        mapValues(e => e.inputComponent)
+      )(entities)
+    })
+  ),
   composeWithTracker(stateComposer),
   useDeps(depsMapper),
-  onlyUpdateForKeys(['contentId']),
+  onlyUpdateForKeys(['contentId'])
 )(ContentArea);

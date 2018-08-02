@@ -10,6 +10,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _ModalManager = require('react-overlays/lib/ModalManager');
+
+var _ModalManager2 = _interopRequireDefault(_ModalManager);
+
 var _reactRnd = require('react-rnd');
 
 var _reactRnd2 = _interopRequireDefault(_reactRnd);
@@ -65,7 +69,7 @@ var DraggableWindow = function DraggableWindow(_ref) {
       disableDragging = _ref.disableDragging;
   return _react2.default.createElement(
     _reactOverlays.Modal,
-    { show: true },
+    { show: true, manager: new _ModalManager2.default({ handleContainerOverflow: false }) },
     _react2.default.createElement(
       'div',
       { style: { position: 'fixed', left: 0, top: 0, bottom: 0, right: 0 } },
@@ -74,7 +78,10 @@ var DraggableWindow = function DraggableWindow(_ref) {
         {
           disableDragging: disableDragging,
           'default': {
-            x: x, y: y, width: width, height: height
+            x: x,
+            y: y,
+            width: width,
+            height: height
           },
           style: {
             backgroundColor: 'white',

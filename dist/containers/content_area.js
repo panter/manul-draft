@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.depsMapper = exports.i18nComposer = exports.pluginComposer = exports.stateComposer = exports.dataComposer = undefined;
+exports.depsMapper = exports.i18nComposer = exports.stateComposer = exports.dataComposer = undefined;
 
 var _extends2 = require('babel-runtime/helpers/extends');
 
@@ -51,9 +51,9 @@ var _any3 = _interopRequireDefault(_any2);
 
 var _megadraft = require('megadraft');
 
-var _mantraCore = require('@storybook/mantra-core');
-
 var _recompose = require('recompose');
+
+var _mantraCore = require('@storybook/mantra-core');
 
 var _content_area = require('../components/content_area');
 
@@ -107,33 +107,11 @@ var stateComposer = exports.stateComposer = function stateComposer(_ref2, onData
   onData(null, { canEdit: canEdit, isEditing: isEditing, cancelEditing: cancelEditing, startEditing: startEditing });
 };
 
-var pluginComposer = exports.pluginComposer = function pluginComposer(_ref3, onData) {
-  var _ref3$blockPluginProp = _ref3.blockPluginProps,
-      blockPluginProps = _ref3$blockPluginProp === undefined ? {} : _ref3$blockPluginProp,
-      isEditing = _ref3.isEditing,
-      _ref3$entities = _ref3.entities,
-      entities = _ref3$entities === undefined ? [] : _ref3$entities,
-      _ref3$blockPlugins = _ref3.blockPlugins,
-      blockPlugins = _ref3$blockPlugins === undefined ? [] : _ref3$blockPlugins;
-
-  // megadraft has no concept of editing/readonly (yet)
-  // so we init every plugin with the editingState
-  // in order to display a different component when isEditing/not isEditing
-  onData(null, {
-    megadraftBlockPlugins: blockPlugins.map(function (plugin) {
-      return plugin({ isEditing: isEditing, blockPluginProps: blockPluginProps });
-    }),
-    entityInputs: (0, _flow3.default)((0, _keyBy3.default)('_id'), (0, _mapValues3.default)(function (e) {
-      return e.inputComponent;
-    }))(entities)
-  });
-};
-
-var i18nComposer = exports.i18nComposer = function i18nComposer(_ref4, onData) {
-  var context = _ref4.context,
-      content = _ref4.content,
-      editorState = _ref4.editorState,
-      setEditorState = _ref4.setEditorState;
+var i18nComposer = exports.i18nComposer = function i18nComposer(_ref3, onData) {
+  var context = _ref3.context,
+      content = _ref3.content,
+      editorState = _ref3.editorState,
+      setEditorState = _ref3.setEditorState;
 
   var _context3 = context(),
       manulDraft = _context3.manulDraft;
@@ -170,21 +148,21 @@ var depsMapper = exports.depsMapper = function depsMapper(_context4, actions) {
 exports.default = (0, _mantraCore.composeAll)((0, _composeWithTracker2.default)(i18nComposer),
 // wait for https://github.com/acdlite/recompose/issues/259
 // this here is a dirty workaround
-(0, _recompose.withPropsOnChange)(['initialEditorState'], function (_ref5) {
-  var initialEditorState = _ref5.initialEditorState,
-      setEditorState = _ref5.setEditorState;
+(0, _recompose.withPropsOnChange)(['initialEditorState'], function (_ref4) {
+  var initialEditorState = _ref4.initialEditorState,
+      setEditorState = _ref4.setEditorState;
 
   /* eslint lodash-fp/no-unused-result: 0*/
   (0, _defer3.default)(function () {
     return setEditorState(initialEditorState);
   });
 }), (0, _recompose.withHandlers)({
-  saveAndClose: function saveAndClose(_ref6) {
-    var save = _ref6.save,
-        cancelEditing = _ref6.cancelEditing,
-        editorState = _ref6.editorState,
-        contentId = _ref6.contentId,
-        locale = _ref6.locale;
+  saveAndClose: function saveAndClose(_ref5) {
+    var save = _ref5.save,
+        cancelEditing = _ref5.cancelEditing,
+        editorState = _ref5.editorState,
+        contentId = _ref5.contentId,
+        locale = _ref5.locale;
     return function () {
       save({
         contentId: contentId,
@@ -195,11 +173,11 @@ exports.default = (0, _mantraCore.composeAll)((0, _composeWithTracker2.default)(
       });
     };
   },
-  saveAndEdit: function saveAndEdit(_ref7) {
-    var save = _ref7.save,
-        editorState = _ref7.editorState,
-        contentId = _ref7.contentId,
-        locale = _ref7.locale;
+  saveAndEdit: function saveAndEdit(_ref6) {
+    var save = _ref6.save,
+        editorState = _ref6.editorState,
+        contentId = _ref6.contentId,
+        locale = _ref6.locale;
     return function () {
       save({
         contentId: contentId,
@@ -208,24 +186,40 @@ exports.default = (0, _mantraCore.composeAll)((0, _composeWithTracker2.default)(
       });
     };
   },
-  cancel: function cancel(_ref8) {
-    var cancelEditing = _ref8.cancelEditing,
-        setEditorState = _ref8.setEditorState,
-        initialEditorState = _ref8.initialEditorState;
+  cancel: function cancel(_ref7) {
+    var cancelEditing = _ref7.cancelEditing,
+        setEditorState = _ref7.setEditorState,
+        initialEditorState = _ref7.initialEditorState;
     return function () {
       setEditorState(initialEditorState);
       cancelEditing(false);
     };
   }
-}), (0, _recompose.withProps)(function (_ref9) {
-  var editorState = _ref9.editorState;
+}), (0, _recompose.withProps)(function (_ref8) {
+  var editorState = _ref8.editorState;
   return {
     blockPluginDialogIsActive: (0, _any3.default)(function (block) {
       return block.getData().get('showDialog');
     })(editorState.getCurrentContent().getBlocksAsArray())
   };
-}), (0, _recompose.withState)('editorState', 'setEditorState', function (_ref10) {
-  var initialEditorState = _ref10.initialEditorState;
+}), (0, _recompose.withState)('editorState', 'setEditorState', function (_ref9) {
+  var initialEditorState = _ref9.initialEditorState;
   return initialEditorState;
-}), (0, _composeWithTracker2.default)(dataComposer), (0, _mantraCore.compose)(pluginComposer), (0, _composeWithTracker2.default)(stateComposer), (0, _mantraCore.useDeps)(depsMapper), (0, _recompose.onlyUpdateForKeys)(['contentId']))(_content_area2.default);
+}), (0, _composeWithTracker2.default)(dataComposer), (0, _recompose.withProps)(function (_ref10) {
+  var _ref10$blockPluginPro = _ref10.blockPluginProps,
+      blockPluginProps = _ref10$blockPluginPro === undefined ? {} : _ref10$blockPluginPro,
+      isEditing = _ref10.isEditing,
+      _ref10$entities = _ref10.entities,
+      entities = _ref10$entities === undefined ? [] : _ref10$entities,
+      _ref10$blockPlugins = _ref10.blockPlugins,
+      blockPlugins = _ref10$blockPlugins === undefined ? [] : _ref10$blockPlugins;
+  return {
+    megadraftBlockPlugins: blockPlugins.map(function (plugin) {
+      return plugin({ isEditing: isEditing, blockPluginProps: blockPluginProps });
+    }),
+    entityInputs: (0, _flow3.default)((0, _keyBy3.default)('_id'), (0, _mapValues3.default)(function (e) {
+      return e.inputComponent;
+    }))(entities)
+  };
+}), (0, _composeWithTracker2.default)(stateComposer), (0, _mantraCore.useDeps)(depsMapper), (0, _recompose.onlyUpdateForKeys)(['contentId']))(_content_area2.default);
 //# sourceMappingURL=content_area.js.map

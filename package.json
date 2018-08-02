@@ -1,7 +1,7 @@
 {
   "name": "@panter/manul-draft",
   "description": "",
-  "version": "0.1.0",
+  "version": "0.2.0-beta.0",
   "author": {
     "name": "Marco Wettstein",
     "email": "maw@panter.ch",
@@ -48,13 +48,12 @@
     "test": "babel-node --stage 1 test/harness.js test/**/*.js",
     "compile": "npm run lint && babel src -s -d dist",
     "lint": "eslint src/**.js",
-    "compile:watch": "watch 'npm run compile' src"
+    "compile:watch": "watch 'npm run compile;yalc push' src"
   },
   "main": "./dist/index.js",
   "dependencies": {
     "immutable": "^3.8.2",
-    "megadraft":
-      "https://github.com/panter/megadraft.git#9878113a4a2ab6331f335fd455469b93a5198598",
+    "megadraft": "^0.5.1",
     "react-draggable": "^2.2.6",
     "react-measure": "^1.4.6",
     "react-overlays": "^0.8.3",

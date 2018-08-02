@@ -11,11 +11,11 @@ const Styles = ({ windowWidth, showDialog, dimensions = {} }) => {
     windowWidth - dimensions.left - dialogWidth - margin;
   const dialogLeftPosition = Math.min(
     dialogLeftPositionMax,
-    dialogLeftPositionMin,
+    dialogLeftPositionMin
   );
   return {
     base: {
-      position: 'relative',
+      position: 'relative'
       // zIndex: showDialog ? 1000 : null,
     },
     content: {
@@ -26,7 +26,7 @@ const Styles = ({ windowWidth, showDialog, dimensions = {} }) => {
 
       ':hover': {
         // ...(!hasCustomHover ? { ...theme.borders.editingHighlighting() } : {}),
-      },
+      }
     },
     dialog: {
       // ...theme.misc.defaultTransition,
@@ -40,8 +40,8 @@ const Styles = ({ windowWidth, showDialog, dimensions = {} }) => {
       boxShadow: '2px 2px 8px #333',
       visibility: showDialog ? 'visible' : 'hidden',
       backgroundColor: 'white',
-      padding: 10,
-    },
+      padding: 10
+    }
   };
 };
 const PluginEditableComponent = ({
@@ -57,15 +57,16 @@ const PluginEditableComponent = ({
   children,
   showDialog,
   dimensions = {},
-  windowWidth,
+  windowWidth
   // components from context
 }) => {
   const styles = Styles({
     showDialog,
     dimensions,
     hasCustomHover,
-    windowWidth,
+    windowWidth
   });
+
   return (
     <div style={styles.base}>
       {showDialog && (
@@ -92,7 +93,7 @@ const PluginEditableComponent = ({
         <div
           style={{
             outline: showDialog && '1px dotted black',
-            pointerEvents: !hasCustomHover && 'none',
+            pointerEvents: !hasCustomHover && 'none'
           }}
         >
           <Measure shouldMeasure={showDialog} onMeasure={setDimensions}>

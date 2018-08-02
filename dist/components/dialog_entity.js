@@ -41,7 +41,6 @@ var DialogEntity = function DialogEntity(_ref) {
       props = (0, _objectWithoutProperties3.default)(_ref, ['entityType', 'setEntity', 'cancelEntity', 'removeEntity', 'schema']);
 
   var dataMap = new _immutable2.default.Map(props);
-  var formRef = void 0;
   return _react2.default.createElement(
     'div',
     {
@@ -68,13 +67,11 @@ var DialogEntity = function DialogEntity(_ref) {
         )
       ),
       _react2.default.createElement(_form_entity2.default, {
-        innerRef: function innerRef(el) {
-          return formRef = el;
-        },
         i18nNamespace: 'cm.entities.' + entityType,
         additionalActions: _react2.default.createElement(
           _button2.default,
           {
+            autofocus: true,
             small: true,
             onClick: function onClick() {
               removeEntity();

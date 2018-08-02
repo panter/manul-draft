@@ -1,5 +1,6 @@
-import { MegadraftEditor as MegadraftEditorOrg } from 'megadraft';
+import { MegadraftEditor as MegadraftEditorOrg, Toolbar } from 'megadraft';
 import { Modal } from 'react-overlays';
+import ModalManager from 'react-overlays/lib/ModalManager';
 import { compose, withState } from 'recompose';
 import Measure from 'react-measure';
 import React from 'react';
@@ -123,12 +124,14 @@ const ContentAreaEditor = ({
     />
     {isEditing && (
       <Modal
+        manager={new ModalManager({ handleContainerOverflow: false })}
         backdrop={false}
         show
         autoFocus={false}
         style={{
           position: 'fixed',
           backgroundColor: '#ffffff99',
+          zIndex: 100,
           bottom: 0,
           left: 0,
           right: 0

@@ -32,6 +32,10 @@ var _megadraft = require('megadraft');
 
 var _reactOverlays = require('react-overlays');
 
+var _ModalManager = require('react-overlays/lib/ModalManager');
+
+var _ModalManager2 = _interopRequireDefault(_ModalManager);
+
 var _recompose = require('recompose');
 
 var _reactMeasure = require('react-measure');
@@ -181,12 +185,14 @@ var ContentAreaEditor = function ContentAreaEditor(_ref3) {
     isEditing && _react2.default.createElement(
       _reactOverlays.Modal,
       {
+        manager: new _ModalManager2.default({ handleContainerOverflow: false }),
         backdrop: false,
         show: true,
         autoFocus: false,
         style: {
           position: 'fixed',
           backgroundColor: '#ffffff99',
+          zIndex: 100,
           bottom: 0,
           left: 0,
           right: 0
