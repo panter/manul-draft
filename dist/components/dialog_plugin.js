@@ -40,20 +40,35 @@ var _component_from_context_or2 = _interopRequireDefault(_component_from_context
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var DialogContentWrapper = function DialogContentWrapper(_ref) {
+  var children = _ref.children;
+  return _react2.default.createElement(
+    'div',
+    {
+      style: {
+        maxHeight: '60vh',
+        overflowY: 'auto',
+        overflowX: 'hidden'
+      }
+    },
+    children
+  );
+};
+
 var DialogPlugin = (0, _shouldUpdate3.default)(
 // we need that because draftjs/megadraft update quite often
 // which messes with things like the file-picker-dialog from the browser
 function (props, nextProps) {
   return !(0, _isEqual3.default)(props.dataMap, nextProps.dataMap);
-})((0, _component_from_context_or2.default)('DialogPlugin', function (_ref) {
-  var i18nNamespace = _ref.i18nNamespace,
-      dataMap = _ref.dataMap,
-      schema = _ref.schema,
-      cancel = _ref.cancel,
-      remove = _ref.remove,
-      updateData = _ref.updateData;
+})((0, _component_from_context_or2.default)('DialogPlugin', function (_ref2) {
+  var i18nNamespace = _ref2.i18nNamespace,
+      dataMap = _ref2.dataMap,
+      schema = _ref2.schema,
+      cancel = _ref2.cancel,
+      remove = _ref2.remove,
+      updateData = _ref2.updateData;
   return _react2.default.createElement(
-    'div',
+    DialogContentWrapper,
     null,
     _react2.default.createElement(
       _heading_dialog2.default,

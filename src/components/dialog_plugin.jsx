@@ -9,15 +9,27 @@ import FormPlugin from './form_plugin';
 import HeadingDialog from './heading_dialog';
 import fromContextOr from '../component_from_context_or';
 
+const DialogContentWrapper = ({ children }) => (
+  <div
+    style={{
+      maxHeight: '60vh',
+      overflowY: 'auto',
+      overflowX: 'hidden'
+    }}
+  >
+    {children}
+  </div>
+);
+
 const DialogPlugin = shouldUpdate(
   // we need that because draftjs/megadraft update quite often
   // which messes with things like the file-picker-dialog from the browser
-  (props, nextProps) => !isEqual(props.dataMap, nextProps.dataMap),
+  (props, nextProps) => !isEqual(props.dataMap, nextProps.dataMap)
 )(
   fromContextOr(
     'DialogPlugin',
     ({ i18nNamespace, dataMap, schema, cancel, remove, updateData }) => (
-      <div>
+      <DialogContentWrapper>
         <HeadingDialog>
           <T>{`${i18nNamespace}.label`}</T>
         </HeadingDialog>
@@ -34,9 +46,9 @@ const DialogPlugin = shouldUpdate(
             onSubmit={updateData}
           />
         )}
-      </div>
-    ),
-  ),
+      </DialogContentWrapper>
+    )
+  )
 );
 
 export default DialogPlugin;
