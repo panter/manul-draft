@@ -1,4 +1,5 @@
 import {
+  pure,
   withProps,
   withState,
   withPropsOnChange,
@@ -17,7 +18,8 @@ import {
   flow,
   get,
   keyBy,
-  mapValues
+  mapValues,
+  isEqual
 } from 'lodash/fp';
 import { useDeps, composeAll } from '@storybook/mantra-core';
 
@@ -38,7 +40,13 @@ export const dataComposer = (
       content ? get(`value.${locale}`, content) : sampleContent,
       new DraftJS.CompositeDecorator(entities || [])
     );
-    onData(null, { content, locale, initialEditorState });
+    const copyLocales =
+      content &&
+      flow(
+        keys,
+        filter(l => !isEmpty(get(['value', l], content)))
+      )(content.value);
+    onData(null, { content, locale, copyLocales, initialEditorState });
   }
 };
 
@@ -51,42 +59,6 @@ export const stateComposer = ({ context, contentId }, onData) => {
   onData(null, { canEdit, isEditing, cancelEditing, startEditing });
 };
 
-export const i18nComposer = (
-  { context, content, editorState, setEditorState },
-  onData
-) => {
-  const { manulDraft } = context();
-  const highlightEditable = invoke('highlightEditable', manulDraft);
-  // keys in value are locales where we can copy from
-  const copyLocales =
-    content &&
-    flow(
-      keys,
-      filter(locale => !isEmpty(get(['value', locale], content)))
-    )(content.value);
-
-  const copyFromLocale = fromLocale => {
-    // clone the content
-    const fromContent = get(`value.${fromLocale}`, content);
-    if (fromContent) {
-      // some draftjs voodoo to insert the rawContent into the current selection
-      const newContentState = DraftJS.convertFromRaw(fromContent);
-      const newContent = DraftJS.Modifier.replaceWithFragment(
-        editorState.getCurrentContent(),
-        editorState.getSelection(),
-        newContentState.getBlockMap()
-      );
-      const newEditorState = DraftJS.EditorState.push(
-        editorState,
-        newContent,
-        'insert-fragment'
-      );
-      setEditorState(newEditorState);
-    }
-  };
-  onData(null, { copyLocales, highlightEditable, copyFromLocale });
-};
-
 export const depsMapper = (context, actions) => ({
   context: () => context,
   save: actions.cm.save,
@@ -94,7 +66,27 @@ export const depsMapper = (context, actions) => ({
 });
 
 export default composeAll(
-  composeWithTracker(i18nComposer),
+  withHandlers({
+    copyFromLocale: props => fromLocale => {
+      // clone the content
+      const fromContent = get(`value.${fromLocale}`, props.content);
+      if (fromContent) {
+        // some draftjs voodoo to insert the rawContent into the current selection
+        const newContentState = DraftJS.convertFromRaw(fromContent);
+        const newContent = DraftJS.Modifier.replaceWithFragment(
+          props.editorState.getCurrentContent(),
+          props.editorState.getSelection(),
+          newContentState.getBlockMap()
+        );
+        const newEditorState = DraftJS.EditorState.push(
+          props.editorState,
+          newContent,
+          'insert-fragment'
+        );
+        props.setEditorState(newEditorState);
+      }
+    }
+  }),
   // wait for https://github.com/acdlite/recompose/issues/259
   // this here is a dirty workaround
   withPropsOnChange(
@@ -138,11 +130,19 @@ export default composeAll(
       editorState.getCurrentContent().getBlocksAsArray()
     )
   })),
+  withHandlers({
+    setEditorState: props => newEditorState => {
+      if (!isEqual(props.editorState, newEditorState)) {
+        props.setEditorState(newEditorState);
+      }
+    }
+  }),
   withState(
     'editorState',
     'setEditorState',
     ({ initialEditorState }) => initialEditorState
   ),
+  pure,
   composeWithTracker(dataComposer),
   withProps(
     ({

@@ -28,13 +28,9 @@ var _inherits2 = require('babel-runtime/helpers/inherits');
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
-var _withState2 = require('recompose/withState');
+var _pure2 = require('recompose/pure');
 
-var _withState3 = _interopRequireDefault(_withState2);
-
-var _compose2 = require('recompose/compose');
-
-var _compose3 = _interopRequireDefault(_compose2);
+var _pure3 = _interopRequireDefault(_pure2);
 
 var _megadraft = require('megadraft');
 
@@ -44,10 +40,6 @@ var _ModalManager = require('react-overlays/lib/ModalManager');
 
 var _ModalManager2 = _interopRequireDefault(_ModalManager);
 
-var _reactMeasure = require('react-measure');
-
-var _reactMeasure2 = _interopRequireDefault(_reactMeasure);
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -55,6 +47,10 @@ var _react2 = _interopRequireDefault(_react);
 var _area_actions_toolbar = require('./area_actions_toolbar');
 
 var _area_actions_toolbar2 = _interopRequireDefault(_area_actions_toolbar);
+
+var _content_area_wrapper = require('../containers/content_area_wrapper');
+
+var _content_area_wrapper2 = _interopRequireDefault(_content_area_wrapper);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -78,103 +74,23 @@ var MegadraftEditor = function (_MegadraftEditorOrg) {
   return MegadraftEditor;
 }(_megadraft.MegadraftEditor);
 
-var Styles = function Styles(_ref) {
-  var highlightEditable = _ref.highlightEditable,
-      isEditing = _ref.isEditing;
-  return {
-    base: (0, _extends3.default)({}, highlightEditable ? {
-      outline: '1px dotted black',
-      padding: 15,
-      margin: -15
-    } : {}, isEditing ? {
-      outline: '1px dotted black',
-      padding: 15,
-      margin: -15
-    } : {}, {
-      cursor: highlightEditable ? 'pointer' : null,
-      position: 'relative'
-    })
-  };
-};
-
-var enhance = (0, _compose3.default)((0, _withState3.default)('dimensions', 'setDimensions', function () {
-  return {
-    top: 0,
-    left: 0,
-    width: 100,
-    height: 100
-  };
-}), (0, _withState3.default)('editorHasFocus', 'setEditorHasFocus', false));
-
-var ContentAreaWrapper = function ContentAreaWrapper(_ref2) {
-  var className = _ref2.className,
-      style = _ref2.style,
-      canEdit = _ref2.canEdit,
-      isEditing = _ref2.isEditing,
-      blockPluginDialogIsActive = _ref2.blockPluginDialogIsActive,
-      highlightEditable = _ref2.highlightEditable,
-      startEditing = _ref2.startEditing,
-      cancelEditing = _ref2.cancelEditing,
-      locale = _ref2.locale,
-      saveAndClose = _ref2.saveAndClose,
-      saveAndEdit = _ref2.saveAndEdit,
-      _ref2$copyLocales = _ref2.copyLocales,
-      copyLocales = _ref2$copyLocales === undefined ? [] : _ref2$copyLocales,
-      copyFromLocale = _ref2.copyFromLocale,
-      setDimensions = _ref2.setDimensions,
-      dimensions = _ref2.dimensions,
-      editorHasFocus = _ref2.editorHasFocus,
-      setEditorHasFocus = _ref2.setEditorHasFocus,
-      editorReadOnly = _ref2.editorReadOnly,
-      editor = _ref2.editor;
-
-  var styles = Styles({ highlightEditable: highlightEditable, isEditing: isEditing });
-
-  return _react2.default.createElement(
-    _reactMeasure2.default
-    // shouldMeasure={isEditing}
-    ,
-    { onMeasure: setDimensions
-    },
-    _react2.default.createElement(
-      'div',
-      { style: style, className: className },
-      _react2.default.createElement(
-        'div',
-        {
-          style: styles.base,
-          onClick: function onClick() {
-            return canEdit && highlightEditable && startEditing();
-          }
-        },
-        _react2.default.createElement(
-          'div',
-          { style: highlightEditable ? { pointerEvents: 'none' } : null },
-          !blockPluginDialogIsActive && canEdit && isEditing ? editor : editorReadOnly,
-          _react2.default.createElement('div', { style: { clear: 'both' } })
-        )
-      )
-    )
-  );
-};
-
-var ContentAreaEditor = function ContentAreaEditor(_ref3) {
-  var readOnly = _ref3.readOnly,
-      contentId = _ref3.contentId,
-      isEditing = _ref3.isEditing,
-      entityInputs = _ref3.entityInputs,
-      editorState = _ref3.editorState,
-      setEditorState = _ref3.setEditorState,
-      megadraftActions = _ref3.megadraftActions,
-      blockRenderMap = _ref3.blockRenderMap,
-      _ref3$megadraftBlockP = _ref3.megadraftBlockPlugins,
-      megadraftBlockPlugins = _ref3$megadraftBlockP === undefined ? [] : _ref3$megadraftBlockP,
-      saveAndClose = _ref3.saveAndClose,
-      saveAndEdit = _ref3.saveAndEdit,
-      cancelEditing = _ref3.cancelEditing,
-      locale = _ref3.locale,
-      copyLocales = _ref3.copyLocales,
-      copyFromLocale = _ref3.copyFromLocale;
+var ContentAreaEditor = (0, _pure3.default)(function (_ref) {
+  var readOnly = _ref.readOnly,
+      contentId = _ref.contentId,
+      isEditing = _ref.isEditing,
+      entityInputs = _ref.entityInputs,
+      editorState = _ref.editorState,
+      setEditorState = _ref.setEditorState,
+      megadraftActions = _ref.megadraftActions,
+      blockRenderMap = _ref.blockRenderMap,
+      _ref$megadraftBlockPl = _ref.megadraftBlockPlugins,
+      megadraftBlockPlugins = _ref$megadraftBlockPl === undefined ? [] : _ref$megadraftBlockPl,
+      saveAndClose = _ref.saveAndClose,
+      saveAndEdit = _ref.saveAndEdit,
+      cancelEditing = _ref.cancelEditing,
+      locale = _ref.locale,
+      copyLocales = _ref.copyLocales,
+      copyFromLocale = _ref.copyFromLocale;
   return _react2.default.createElement(
     'div',
     null,
@@ -187,7 +103,6 @@ var ContentAreaEditor = function ContentAreaEditor(_ref3) {
       entityInputs: entityInputs,
       blockRenderMap: blockRenderMap,
       onChange: setEditorState
-
     }),
     isEditing && _react2.default.createElement(
       _reactOverlays.Modal,
@@ -215,35 +130,30 @@ var ContentAreaEditor = function ContentAreaEditor(_ref3) {
       })
     )
   );
-};
+});
 
-var ContentArea = enhance(function (_ref4) {
-  var isEditing = _ref4.isEditing,
-      entityInputs = _ref4.entityInputs,
-      editorState = _ref4.editorState,
-      setEditorState = _ref4.setEditorState,
-      megadraftActions = _ref4.megadraftActions,
-      blockRenderMap = _ref4.blockRenderMap,
-      _ref4$megadraftBlockP = _ref4.megadraftBlockPlugins,
-      megadraftBlockPlugins = _ref4$megadraftBlockP === undefined ? [] : _ref4$megadraftBlockP,
-      contentId = _ref4.contentId,
-      className = _ref4.className,
-      style = _ref4.style,
-      canEdit = _ref4.canEdit,
-      blockPluginDialogIsActive = _ref4.blockPluginDialogIsActive,
-      highlightEditable = _ref4.highlightEditable,
-      startEditing = _ref4.startEditing,
-      cancelEditing = _ref4.cancelEditing,
-      locale = _ref4.locale,
-      saveAndClose = _ref4.saveAndClose,
-      saveAndEdit = _ref4.saveAndEdit,
-      _ref4$copyLocales = _ref4.copyLocales,
-      copyLocales = _ref4$copyLocales === undefined ? [] : _ref4$copyLocales,
-      copyFromLocale = _ref4.copyFromLocale,
-      setDimensions = _ref4.setDimensions,
-      dimensions = _ref4.dimensions,
-      editorHasFocus = _ref4.editorHasFocus,
-      setEditorHasFocus = _ref4.setEditorHasFocus;
+var ContentArea = (0, _pure3.default)(function (_ref2) {
+  var isEditing = _ref2.isEditing,
+      entityInputs = _ref2.entityInputs,
+      editorState = _ref2.editorState,
+      setEditorState = _ref2.setEditorState,
+      megadraftActions = _ref2.megadraftActions,
+      blockRenderMap = _ref2.blockRenderMap,
+      _ref2$megadraftBlockP = _ref2.megadraftBlockPlugins,
+      megadraftBlockPlugins = _ref2$megadraftBlockP === undefined ? [] : _ref2$megadraftBlockP,
+      contentId = _ref2.contentId,
+      className = _ref2.className,
+      style = _ref2.style,
+      canEdit = _ref2.canEdit,
+      blockPluginDialogIsActive = _ref2.blockPluginDialogIsActive,
+      startEditing = _ref2.startEditing,
+      cancelEditing = _ref2.cancelEditing,
+      locale = _ref2.locale,
+      saveAndClose = _ref2.saveAndClose,
+      saveAndEdit = _ref2.saveAndEdit,
+      _ref2$copyLocales = _ref2.copyLocales,
+      copyLocales = _ref2$copyLocales === undefined ? [] : _ref2$copyLocales,
+      copyFromLocale = _ref2.copyFromLocale;
 
   var editorProps = {
     contentId: contentId,
@@ -261,32 +171,20 @@ var ContentArea = enhance(function (_ref4) {
     copyLocales: copyLocales,
     copyFromLocale: copyFromLocale
   };
-  var wrapperProps = {
-    className: className,
-    style: style,
-    canEdit: canEdit,
-    isEditing: isEditing,
-    blockPluginDialogIsActive: blockPluginDialogIsActive,
-    highlightEditable: highlightEditable,
-    startEditing: startEditing,
-    cancelEditing: cancelEditing,
 
-    locale: locale,
-
-    saveAndClose: saveAndClose,
-    saveAndEdit: saveAndEdit,
-    copyLocales: copyLocales,
-    copyFromLocale: copyFromLocale,
-    setDimensions: setDimensions,
-    dimensions: dimensions,
-    editorHasFocus: editorHasFocus,
-    setEditorHasFocus: setEditorHasFocus
-  };
-
-  return _react2.default.createElement(ContentAreaWrapper, (0, _extends3.default)({}, wrapperProps, {
-    editor: _react2.default.createElement(ContentAreaEditor, editorProps),
-    editorReadOnly: _react2.default.createElement(ContentAreaEditor, (0, _extends3.default)({ readOnly: true }, editorProps))
-  }));
+  return _react2.default.createElement(
+    _content_area_wrapper2.default,
+    {
+      className: className,
+      style: style,
+      canEdit: canEdit,
+      isEditing: isEditing,
+      startEditing: startEditing
+    },
+    _react2.default.createElement(ContentAreaEditor, (0, _extends3.default)({
+      readOnly: blockPluginDialogIsActive || !canEdit || !isEditing
+    }, editorProps))
+  );
 });
 
 ContentArea.displayName = 'ContentArea';

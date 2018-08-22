@@ -8,7 +8,6 @@ from context.manulDraft or one of the given default component
 **/
 
 export const depsMapper = context => ({
-  context: () => context,
   components: context.manulDraft.components
 });
 

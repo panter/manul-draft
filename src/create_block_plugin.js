@@ -1,9 +1,8 @@
 import { T } from '@panter/manul-i18n';
 import { insertDataBlock } from 'megadraft';
+import { withHandlers, pure } from 'recompose';
 import React from 'react';
-
 import Immutable from 'immutable';
-
 import ButtonAddPlugin from './components/button_add_plugin';
 import PluginEditableComponent from './containers/plugin_editable_component';
 import wrapInSimpleSchema from './utils/wrap_in_simpleschema';
@@ -18,15 +17,12 @@ const BlockComponent = ({
   i18nNamespace,
   hasCustomHover
 }) => {
-  const dataMap = Immutable.fromJS(data);
-  const component = (
-    <Component {...blockPluginProps} {...data} isEditing={isEditing} />
-  );
-
-  // show the render-component when not in editmode or if the plugin has no schema
+  // show the render-component when not in editmode
   if (!isEditing) {
-    return component;
+    return <Component {...blockPluginProps} {...data} />;
   }
+  const dataMap = Immutable.fromJS(data);
+
   return (
     <PluginEditableComponent
       schema={schema}
@@ -35,40 +31,36 @@ const BlockComponent = ({
       container={container}
       hasCustomHover={hasCustomHover}
     >
-      {component}
+      <Component {...blockPluginProps} {...data} isEditing />
     </PluginEditableComponent>
   );
 };
 
-const ButtonComponent = ({
-  i18nNamespace,
-  showDialogInitially,
-  type,
-  schema,
-  onChange,
-  editorState
-}) => {
-  const addPlugin = () => {
-    const data = {
+const ButtonComponent = pure(
+  withHandlers({
+    onClick: ({
+      onChange,
       type,
-      showDialog: showDialogInitially,
-      ...(schema ? schema.clean({}) : {})
-    };
+      schema,
+      showDialogInitially,
+      editorState
+    }) => e => {
+      e.preventDefault();
+      const data = {
+        type,
+        showDialog: showDialogInitially,
+        ...(schema ? schema.clean({}) : {})
+      };
 
-    // Calls the onChange method with the new state.
-    onChange(insertDataBlock(editorState, data));
-  };
-  return (
-    <ButtonAddPlugin
-      onClick={e => {
-        e.preventDefault();
-        addPlugin({ onChange, editorState });
-      }}
-    >
+      // Calls the onChange method with the new state.
+      onChange(insertDataBlock(editorState, data));
+    }
+  })(({ i18nNamespace, onClick }) => (
+    <ButtonAddPlugin onClick={onClick}>
       <T _id={[`${i18nNamespace}.add`, `${i18nNamespace}.label`]} />
     </ButtonAddPlugin>
-  );
-};
+  ))
+);
 /* eslint react/display-name: 0*/
 export default ({
   type,
@@ -76,10 +68,9 @@ export default ({
   schema: schemaDef = null,
   Component,
   hasCustomHover
-}) => pppp => {
-  const { blockPluginProps, isEditing } = pppp;
+}) => ({ blockPluginProps, isEditing }) => {
   const schema = schemaDef && wrapInSimpleSchema(schemaDef);
-
+  const PureComponent = pure(Component);
   const showDialogInitially = Boolean(schema); // if has schema
 
   return {
@@ -104,7 +95,7 @@ export default ({
         isEditing={isEditing}
         data={data}
         container={container}
-        Component={Component}
+        Component={PureComponent}
         blockPluginProps={blockPluginProps}
         hasCustomHover={hasCustomHover}
         i18nNamespace={i18nNamespace}

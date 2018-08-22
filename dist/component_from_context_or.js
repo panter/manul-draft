@@ -30,12 +30,9 @@ helper that returns either the component
 from context.manulDraft or one of the given default component
 **/
 
-var depsMapper = exports.depsMapper = function depsMapper(_context) {
+var depsMapper = exports.depsMapper = function depsMapper(context) {
   return {
-    context: function context() {
-      return _context;
-    },
-    components: _context.manulDraft.components
+    components: context.manulDraft.components
   };
 };
 

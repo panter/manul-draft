@@ -1,11 +1,12 @@
-import { MegadraftEditor as MegadraftEditorOrg, Toolbar } from 'megadraft';
+import { MegadraftEditor as MegadraftEditorOrg } from 'megadraft';
 import { Modal } from 'react-overlays';
 import ModalManager from 'react-overlays/lib/ModalManager';
-import { compose, withState } from 'recompose';
-import Measure from 'react-measure';
+import { compose, withState, pure } from 'recompose';
+
 import React from 'react';
 
 import AreaActionsToolbar from './area_actions_toolbar';
+import ContentAreaWrapper from '../containers/content_area_wrapper';
 
 // quickfix for https://github.com/globocom/megadraft/issues/97
 class MegadraftEditor extends MegadraftEditorOrg {
@@ -15,143 +16,65 @@ class MegadraftEditor extends MegadraftEditorOrg {
   }
 }
 
-const Styles = ({ highlightEditable, isEditing }) => ({
-  base: {
-    ...(highlightEditable
-      ? {
-          outline: '1px dotted black',
-          padding: 15,
-          margin: -15
-        }
-      : {}),
-    ...(isEditing
-      ? {
-          outline: '1px dotted black',
-          padding: 15,
-          margin: -15
-        }
-      : {}),
-    cursor: highlightEditable ? 'pointer' : null,
-    position: 'relative'
-  }
-});
-
-const enhance = compose(
-  withState('dimensions', 'setDimensions', () => ({
-    top: 0,
-    left: 0,
-    width: 100,
-    height: 100
-  })),
-  withState('editorHasFocus', 'setEditorHasFocus', false)
-);
-
-const ContentAreaWrapper = ({
-  className,
-  style,
-  canEdit,
-  isEditing,
-  blockPluginDialogIsActive,
-  highlightEditable,
-  startEditing,
-  cancelEditing,
-
-  locale,
-
-  saveAndClose,
-  saveAndEdit,
-  copyLocales = [],
-  copyFromLocale,
-  setDimensions,
-  dimensions,
-  editorHasFocus,
-  setEditorHasFocus,
-  editorReadOnly,
-  editor
-}) => {
-  const styles = Styles({ highlightEditable, isEditing });
-
-  return (
-    <Measure
-      // shouldMeasure={isEditing}
-      onMeasure={setDimensions}
-    >
-      <div style={style} className={className}>
-        <div
-          style={styles.base}
-          onClick={() => canEdit && highlightEditable && startEditing()}
+const ContentAreaEditor = pure(
+  ({
+    readOnly,
+    contentId,
+    isEditing,
+    entityInputs,
+    editorState,
+    setEditorState,
+    megadraftActions,
+    blockRenderMap,
+    megadraftBlockPlugins = [],
+    saveAndClose,
+    saveAndEdit,
+    cancelEditing,
+    locale,
+    copyLocales,
+    copyFromLocale
+  }) => (
+    <div>
+      <MegadraftEditor
+        key={`${contentId}${isEditing ? '_editing' : ''}`} // force rerender
+        actions={megadraftActions}
+        plugins={megadraftBlockPlugins}
+        readOnly={readOnly}
+        editorState={editorState}
+        entityInputs={entityInputs}
+        blockRenderMap={blockRenderMap}
+        onChange={setEditorState}
+      />
+      {isEditing && (
+        <Modal
+          manager={new ModalManager({ handleContainerOverflow: false })}
+          backdrop={false}
+          show
+          autoFocus={false}
+          style={{
+            position: 'fixed',
+            backgroundColor: '#ffffff99',
+            zIndex: 100,
+            bottom: 0,
+            left: 0,
+            right: 0
+          }}
         >
-          <div style={highlightEditable ? { pointerEvents: 'none' } : null}>
-            {!blockPluginDialogIsActive && canEdit && isEditing
-              ? editor
-              : editorReadOnly}
-
-            <div style={{ clear: 'both' }} />
-          </div>
-        </div>
-      </div>
-    </Measure>
-  );
-};
-
-const ContentAreaEditor = ({
-  readOnly,
-  contentId,
-  isEditing,
-  entityInputs,
-  editorState,
-  setEditorState,
-  megadraftActions,
-  blockRenderMap,
-  megadraftBlockPlugins = [],
-  saveAndClose,
-  saveAndEdit,
-  cancelEditing,
-  locale,
-  copyLocales,
-  copyFromLocale
-}) => (
-  <div>
-    <MegadraftEditor
-      key={`${contentId}${isEditing ? '_editing' : ''}`} // force rerender
-      actions={megadraftActions}
-      plugins={megadraftBlockPlugins}
-      readOnly={readOnly}
-      editorState={editorState}
-      entityInputs={entityInputs}
-      blockRenderMap={blockRenderMap}
-      onChange={setEditorState}
-      
-    />
-    {isEditing && (
-      <Modal
-        manager={new ModalManager({ handleContainerOverflow: false })}
-        backdrop={false}
-        show
-        autoFocus={false}
-        style={{
-          position: 'fixed',
-          backgroundColor: '#ffffff99',
-          zIndex: 100,
-          bottom: 0,
-          left: 0,
-          right: 0
-        }}
-      >
-        <AreaActionsToolbar
-          saveAndClose={saveAndClose}
-          saveAndEdit={saveAndEdit}
-          cancelEditing={cancelEditing}
-          locale={locale}
-          copyLocales={copyLocales}
-          copyFromLocale={copyFromLocale}
-        />
-      </Modal>
-    )}
-  </div>
+          <AreaActionsToolbar
+            saveAndClose={saveAndClose}
+            saveAndEdit={saveAndEdit}
+            cancelEditing={cancelEditing}
+            locale={locale}
+            copyLocales={copyLocales}
+            copyFromLocale={copyFromLocale}
+          />
+        </Modal>
+      )}
+    </div>
+  )
 );
 
-const ContentArea = enhance(
+const ContentArea = pure(
   ({
     isEditing,
     entityInputs,
@@ -165,7 +88,6 @@ const ContentArea = enhance(
     style,
     canEdit,
     blockPluginDialogIsActive,
-    highlightEditable,
     startEditing,
     cancelEditing,
 
@@ -174,11 +96,7 @@ const ContentArea = enhance(
     saveAndClose,
     saveAndEdit,
     copyLocales = [],
-    copyFromLocale,
-    setDimensions,
-    dimensions,
-    editorHasFocus,
-    setEditorHasFocus
+    copyFromLocale
   }) => {
     const editorProps = {
       contentId,
@@ -196,34 +114,20 @@ const ContentArea = enhance(
       copyLocales,
       copyFromLocale
     };
-    const wrapperProps = {
-      className,
-      style,
-      canEdit,
-      isEditing,
-      blockPluginDialogIsActive,
-      highlightEditable,
-      startEditing,
-      cancelEditing,
-
-      locale,
-
-      saveAndClose,
-      saveAndEdit,
-      copyLocales,
-      copyFromLocale,
-      setDimensions,
-      dimensions,
-      editorHasFocus,
-      setEditorHasFocus
-    };
 
     return (
       <ContentAreaWrapper
-        {...wrapperProps}
-        editor={<ContentAreaEditor {...editorProps} />}
-        editorReadOnly={<ContentAreaEditor readOnly {...editorProps} />}
-      />
+        className={className}
+        style={style}
+        canEdit={canEdit}
+        isEditing={isEditing}
+        startEditing={startEditing}
+      >
+        <ContentAreaEditor
+          readOnly={blockPluginDialogIsActive || !canEdit || !isEditing}
+          {...editorProps}
+        />
+      </ContentAreaWrapper>
     );
   }
 );

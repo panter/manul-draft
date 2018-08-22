@@ -1,7 +1,7 @@
 {
   "name": "@panter/manul-draft",
   "description": "",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "author": {
     "name": "Marco Wettstein",
     "email": "maw@panter.ch",
@@ -51,7 +51,7 @@
   "dependencies": {
     "immutable": "^3.8.2",
     "megadraft": "https://github.com/macrozone/megadraft.git#0d09453ac9b5b4205199f8456ca68acd5a6889ff",
-    "react-draggable": "^2.2.6",
+    "react-draggable": "^3.0.5",
     "react-measure": "^1.4.6",
     "react-overlays": "^0.8.3",
     "react-rnd": "^5.0.9",
