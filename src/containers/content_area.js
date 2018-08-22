@@ -31,8 +31,13 @@ export const dataComposer = (
   onData
 ) => {
   const { Meteor, Collections, i18n } = context();
-  const contentLoaded = Meteor.subscribe('contents.one', contentId).ready();
   const locale = i18n.getLocale();
+  const contentLoaded = Meteor.subscribe(
+    'contents.one',
+    contentId,
+    locale
+  ).ready();
+
   const content = Collections.Contents.findOne(contentId);
 
   if (contentLoaded) {
