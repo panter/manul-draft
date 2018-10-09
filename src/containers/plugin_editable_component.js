@@ -5,7 +5,7 @@ import windowDimensions from 'react-window-dimensions';
 
 import PluginEditableComponent from '../components/plugin_editable_component';
 
-export const depsMapper = (context, actions) => ({
+export const depsMapper = context => ({
   context: () => context,
   ...context.manulDraft
 });
@@ -24,7 +24,7 @@ export default composeAll(
       /* eslint lodash-fp/no-unused-result: 0*/
       delay(100, () => container.remove());
     },
-    cancel: ({ dataMap, setShowDialog, container }) => () => {
+    cancel: ({ setShowDialog }) => () => {
       setShowDialog(false);
       // container.updateData(dataMap.set('forceDialog', false));
     },

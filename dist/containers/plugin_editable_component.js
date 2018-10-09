@@ -41,7 +41,7 @@ var _plugin_editable_component2 = _interopRequireDefault(_plugin_editable_compon
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var depsMapper = exports.depsMapper = function depsMapper(_context, actions) {
+var depsMapper = exports.depsMapper = function depsMapper(_context) {
   return (0, _extends3.default)({
     context: function context() {
       return _context;
@@ -69,9 +69,7 @@ exports.default = (0, _mantraCore.composeAll)((0, _withState3.default)('dimensio
     };
   },
   cancel: function cancel(_ref2) {
-    var dataMap = _ref2.dataMap,
-        setShowDialog = _ref2.setShowDialog,
-        container = _ref2.container;
+    var setShowDialog = _ref2.setShowDialog;
     return function () {
       setShowDialog(false);
       // container.updateData(dataMap.set('forceDialog', false));

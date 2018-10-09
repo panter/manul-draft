@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Measure from 'react-measure';
 import Draggable from 'react-draggable';
 import DialogPlugin from './dialog_plugin';
@@ -44,6 +44,7 @@ const Styles = ({ windowWidth, showDialog, dimensions = {} }) => {
     }
   };
 };
+
 const PluginEditableComponent = ({
   i18nNamespace,
   schema,
@@ -67,10 +68,14 @@ const PluginEditableComponent = ({
     windowWidth
   });
 
+  if (!children) return null;
   return (
     <div style={styles.base}>
       {showDialog && (
-        <Draggable>
+        <Draggable
+          // see https://github.com/mzabriskie/react-draggable/issues/315
+          enableUserSelectHack={false}
+        >
           <div style={styles.dialog}>
             <DialogPlugin
               cancel={cancel}
@@ -97,7 +102,10 @@ const PluginEditableComponent = ({
           }}
         >
           <Measure shouldMeasure={showDialog} onMeasure={setDimensions}>
-            {children}
+            <Fragment>
+              {children}
+              <div />
+            </Fragment>
           </Measure>
         </div>
       </div>

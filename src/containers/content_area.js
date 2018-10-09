@@ -10,7 +10,6 @@ import { DraftJS, editorStateFromRaw } from 'megadraft';
 
 import {
   any,
-  invoke,
   defer,
   keys,
   filter,

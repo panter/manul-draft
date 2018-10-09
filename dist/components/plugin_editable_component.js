@@ -64,6 +64,7 @@ var Styles = function Styles(_ref) {
     }
   };
 };
+
 var PluginEditableComponent = function PluginEditableComponent(_ref2) {
   var i18nNamespace = _ref2.i18nNamespace,
       schema = _ref2.schema,
@@ -87,12 +88,16 @@ var PluginEditableComponent = function PluginEditableComponent(_ref2) {
     windowWidth: windowWidth
   });
 
+  if (!children) return null;
   return _react2.default.createElement(
     'div',
     { style: styles.base },
     showDialog && _react2.default.createElement(
-      _reactDraggable2.default,
-      null,
+      _reactDraggable2.default
+      // see https://github.com/mzabriskie/react-draggable/issues/315
+      ,
+      { enableUserSelectHack: false
+      },
       _react2.default.createElement(
         'div',
         { style: styles.dialog },
@@ -126,7 +131,12 @@ var PluginEditableComponent = function PluginEditableComponent(_ref2) {
         _react2.default.createElement(
           _reactMeasure2.default,
           { shouldMeasure: showDialog, onMeasure: setDimensions },
-          children
+          _react2.default.createElement(
+            _react.Fragment,
+            null,
+            children,
+            _react2.default.createElement('div', null)
+          )
         )
       )
     )
