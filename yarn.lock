@@ -1942,13 +1942,6 @@ hosted-git-info@^2.1.4:
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.5.0.tgz#6d60e34b3abbc8313062c3b798ef8d901a07af3c"
   integrity sha512-pNgbURSuab90KbTqvRPsseaTxOJCZBD0a7t+haSN33piP9cCM4l0CqdzAif2hUqm716UovKB2ROmiabGAKVXyg==
 
-html-parse-stringify2@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/html-parse-stringify2/-/html-parse-stringify2-2.0.1.tgz#dc5670b7292ca158b7bc916c9a6735ac8872834a"
-  integrity sha1-3FZwtyksoVi3vJFsmmc1rIhyg0o=
-  dependencies:
-    void-elements "^2.0.1"
-
 http-signature@~1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/http-signature/-/http-signature-1.1.1.tgz#df72e267066cd0ac67fb76adf8e134a8fbcf91bf"
@@ -1957,11 +1950,6 @@ http-signature@~1.1.0:
     assert-plus "^0.2.0"
     jsprim "^1.2.2"
     sshpk "^1.7.0"
-
-i18next@^11.3.3:
-  version "11.5.0"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-11.5.0.tgz#1e8df15d5d7e96b27da964abde6e7367169fb4c1"
-  integrity sha512-PM2G3iY1LoHonDwygLT9xyBAINuHujXnisnrib7RXdLtE9Tb1dT8RKXwWB+MCl9VOcM5rJwWO9iLw/3KftVEoA==
 
 iconv-lite@~0.4.13:
   version "0.4.18"
@@ -2580,17 +2568,16 @@ loose-envify@^1.0.0, loose-envify@^1.3.1:
   dependencies:
     js-tokens "^3.0.0"
 
-"megadraft@https://github.com/macrozone/megadraft.git#0d09453ac9b5b4205199f8456ca68acd5a6889ff":
-  version "0.5.1"
-  resolved "https://github.com/macrozone/megadraft.git#0d09453ac9b5b4205199f8456ca68acd5a6889ff"
+megadraft@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/megadraft/-/megadraft-0.6.2.tgz#cdb859e12756823cd1b0daaf74c7ea291e181f9b"
+  integrity sha512-g1ICfSRvTbyY1ucw5k1ooz1PhUU29uTpfMMSDslG0rijLn+auJNgI90EPUcoaeuzlMCdqit7A36Z4skvPXwPoQ==
   dependencies:
     backstage-modal "^0.3.2"
     classnames "^2.2.5"
     draft-js "0.10.5"
-    i18next "^11.3.3"
     immutable "~3.8.2"
     prop-types "^15.5.10"
-    react-i18next "^7.7.0"
     setimmediate "^1.0.4"
 
 merge@^1.1.3:
@@ -3035,15 +3022,6 @@ react-draggable@^3.0.5:
   integrity sha512-qo76q6+pafyGllbmfc+CgWfOkwY9v3UoJa3jp6xG2vdsRY8uJTN1kqNievLj0uVNjEqCvZ0OFiEBxlAJNj3OTg==
   dependencies:
     classnames "^2.2.5"
-    prop-types "^15.6.0"
-
-react-i18next@^7.7.0:
-  version "7.10.1"
-  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-7.10.1.tgz#9e119c15970eb401b9ef178336a2e09dd120bb15"
-  integrity sha512-Kk3fXyjmZa0JXsDRDsyCSDVnjW2L2rDP+PDaTbmxdIwa8M6Yr4A33HHrdCBUyTK0LDZUYm47aRR9iRmWlT9xDQ==
-  dependencies:
-    hoist-non-react-statics "^2.3.1"
-    html-parse-stringify2 "2.0.1"
     prop-types "^15.6.0"
 
 react-lifecycles-compat@^3.0.2:
@@ -3708,11 +3686,6 @@ verror@1.10.0:
     assert-plus "^1.0.0"
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
-
-void-elements@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
-  integrity sha1-wGavtYK7HLQSjWDqkjkulNXp2+w=
 
 warning@^3.0.0:
   version "3.0.0"

@@ -12,9 +12,16 @@ var myCompose = (0, _reactKomposer.setDefaults)({
   withRef: false
 });
 
-/* global Tracker */
+/* global Tracker, Meteor */
+
 function composeWithTracker(reactiveFn, options) {
   var onPropsChange = function onPropsChange(props, onData, context) {
+    if (Meteor.isServer) {
+      reactiveFn(props, onData, context);
+      return function () {
+        return null;
+      };
+    }
     var trackerCleanup = void 0;
     var handler = Tracker.nonreactive(function () {
       return Tracker.autorun(function () {
