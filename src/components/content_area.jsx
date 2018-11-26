@@ -1,12 +1,12 @@
-import { MegadraftEditor as MegadraftEditorOrg } from 'megadraft';
-import { Modal } from 'react-overlays';
-import ModalManager from 'react-overlays/lib/ModalManager';
-import { compose, withState, pure } from 'recompose';
+import { MegadraftEditor as MegadraftEditorOrg } from 'megadraft'
+import { Modal } from 'react-overlays'
+import ModalManager from 'react-overlays/lib/ModalManager'
+import { compose, withState, pure } from 'recompose'
 
-import React from 'react';
+import React from 'react'
 
-import AreaActionsToolbar from './area_actions_toolbar';
-import ContentAreaWrapper from '../containers/content_area_wrapper';
+import AreaActionsToolbar from './area_actions_toolbar'
+import ContentAreaWrapper from '../containers/content_area_wrapper'
 
 // quickfix for https://github.com/globocom/megadraft/issues/97
 class MegadraftEditor extends MegadraftEditorOrg {
@@ -37,6 +37,7 @@ const ContentAreaEditor = pure(
     <div>
       <MegadraftEditor
         key={`${contentId}${isEditing ? '_editing' : ''}`} // force rerender
+        editorKey={contentId}
         actions={megadraftActions}
         plugins={megadraftBlockPlugins}
         readOnly={readOnly}
@@ -72,7 +73,7 @@ const ContentAreaEditor = pure(
       )}
     </div>
   )
-);
+)
 
 const ContentArea = pure(
   ({
@@ -113,8 +114,8 @@ const ContentArea = pure(
       locale,
       copyLocales,
       copyFromLocale
-    };
-
+    }
+  
     return (
       <ContentAreaWrapper
         className={className}
@@ -128,10 +129,10 @@ const ContentArea = pure(
           {...editorProps}
         />
       </ContentAreaWrapper>
-    );
+    )
   }
-);
+)
 
-ContentArea.displayName = 'ContentArea';
+ContentArea.displayName = 'ContentArea'
 
-export default ContentArea;
+export default ContentArea

@@ -50,6 +50,7 @@ export const dataComposer = (
         keys,
         filter(l => !isEmpty(get(['value', l], content)))
       )(content.value);
+
     onData(null, { content, locale, copyLocales, initialEditorState });
   }
 };

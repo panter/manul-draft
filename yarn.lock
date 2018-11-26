@@ -2568,10 +2568,10 @@ loose-envify@^1.0.0, loose-envify@^1.3.1:
   dependencies:
     js-tokens "^3.0.0"
 
-megadraft@^0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/megadraft/-/megadraft-0.6.2.tgz#cdb859e12756823cd1b0daaf74c7ea291e181f9b"
-  integrity sha512-g1ICfSRvTbyY1ucw5k1ooz1PhUU29uTpfMMSDslG0rijLn+auJNgI90EPUcoaeuzlMCdqit7A36Z4skvPXwPoQ==
+megadraft@^0.6.3:
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/megadraft/-/megadraft-0.6.3.tgz#cd6fa73df24b31eff59fd0158aa4868f7cd6ec0b"
+  integrity sha512-6POg28F8MEDvvPh68uBdYIne9Kn4vGfLh8Eounf5wI2/2RX1lAEx9UlhGetdl43F9vXnpO0b+cejMLW7utknFQ==
   dependencies:
     backstage-modal "^0.3.2"
     classnames "^2.2.5"

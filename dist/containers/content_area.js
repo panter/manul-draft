@@ -110,6 +110,7 @@ var dataComposer = exports.dataComposer = function dataComposer(_ref, onData) {
     var copyLocales = content && (0, _flow3.default)(_keys3.default, (0, _filter3.default)(function (l) {
       return !(0, _isEmpty3.default)((0, _get3.default)(['value', l], content));
     }))(content.value);
+
     onData(null, { content: content, locale: locale, copyLocales: copyLocales, initialEditorState: initialEditorState });
   }
 };

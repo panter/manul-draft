@@ -96,7 +96,8 @@ var ContentAreaEditor = (0, _pure3.default)(function (_ref) {
     null,
     _react2.default.createElement(MegadraftEditor, {
       key: '' + contentId + (isEditing ? '_editing' : '') // force rerender
-      , actions: megadraftActions,
+      , editorKey: contentId,
+      actions: megadraftActions,
       plugins: megadraftBlockPlugins,
       readOnly: readOnly,
       editorState: editorState,
